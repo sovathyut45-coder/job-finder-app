@@ -11,12 +11,10 @@ class JobRepository {
 Future<List<JobModel>> getJobs({
   required String query,
   int page = 1,
-  int numPages = 1,
   }) async {
     final data = await datasource.getJobs(
       query: query,
       page: page,
-      numPages: numPages,
     );
 
     return data
@@ -26,17 +24,17 @@ Future<List<JobModel>> getJobs({
         .toList();
   }
 
-  Future<List<JobModel>> getJobDetail(String id) async {
-    final data = await datasource.getJobDetail(id);
+  // Future<List<JobModel>> getJobDetail(String id) async {
+  //   final data = await datasource.getJobDetail(id);
 
-  //   for (final job in data) {
-  //   print(job['employer_logo']);
-  // }
+  // //   for (final job in data) {
+  // //   print(job['employer_logo']);  // I Change to Arbeitnow Job Board API
+  // // }
 
-    return data.map<JobModel>(
-      (job) => JobModel.fromJson(job)
-    )
-    .toList();
+  //   return data.map<JobModel>(
+  //     (job) => JobModel.fromJson(job)
+  //   )
+  //   .toList();
     
-  }
+  // }
 }

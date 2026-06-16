@@ -15,31 +15,34 @@ class JobDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Safely get and validate arguments
     final arguments = Get.arguments;
-    if (arguments is String && arguments.isNotEmpty) {
-      getJobDetail(arguments);
-    } else {
-      error.value = "Invalid or missing job ID";
+    if(arguments is JobModel){
+      job.value = arguments;
+    }else{
+      Get.snackbar(
+        'Error',
+        'Invalid Job Data'
+      );
     }
+
   }
 
-  Future<void> getJobDetail(String id) async {
-    try {
-      isLoading.value = true;
-      final data = await repository.getJobDetail(id);
-      // Add safety check for empty/null list
-      if (data.isNotEmpty) {
-        job.value = data.first;
-      } else {
-        error.value = "Job not found";
-      }
-    } catch (e) {
-      error.value = e.toString();
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> getJobDetail(String id) async {
+  //   try {
+  //     isLoading.value = true;
+  //     final data = await repository.getJobDetail(id);
+  //     // Add safety check for empty/null list
+  //     if (data.isNotEmpty) {
+  //       job.value = data.first;
+  //     } else {
+  //       error.value = "Job not found";
+  //     }
+  //   } catch (e) {
+  //     error.value = e.toString();
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   Future<void> applyJob(String url) async{
     if(url.isEmpty){

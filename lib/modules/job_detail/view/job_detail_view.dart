@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/modules/job_detail/controller/job_detail_controller.dart';
 import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
@@ -15,7 +16,6 @@ class JobDetailView extends GetView<JobDetailController> {
         
         title: Obx(() {
           final job = controller.job.value;
-
           if (job == null) {
             return const Text('Job Detail');
           }
@@ -109,28 +109,29 @@ class JobDetailView extends GetView<JobDetailController> {
               Text(
                 jobData.jobTitle,
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
               const SizedBox(height: 8),
-              Text(jobData.employerName),
-              Text(jobData.jobLocation),
+              Text("Company: ${jobData.employerName}"),
+              Text("Location: ${jobData.jobLocation}"),
 
               const SizedBox(height: 16),
+              if (jobData.employmentType.isNotEmpty)
               Chip(
+
                 label: Text(jobData.employmentType),
               ),
 
               const SizedBox(height: 16),
-              Text(
-                'Salary',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              
               const SizedBox(height: 4),
-              Text(
-                '\$${jobData.minSalary} - \$${jobData.maxSalary}',
+              if (jobData.minSalary > 0 || jobData.maxSalary > 0)
+                Text(
+                  'Salary: ${jobData.minSalary.toStringAsFixed(2)} - ${jobData.maxSalary.toStringAsFixed(2)}',
+                  style: Theme.of(context).textTheme.titleLarge,
               ),
 
               const SizedBox(height: 20),
@@ -139,7 +140,7 @@ class JobDetailView extends GetView<JobDetailController> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10),
-              Text(jobData.description),
+              Html(data: jobData.description),
 
               const SizedBox(height: 24),
               SizedBox(

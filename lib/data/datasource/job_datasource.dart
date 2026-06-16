@@ -7,78 +7,78 @@ class JobDatasource {
   }) async {
 
     final response = await DioClient.dio.get(
-      '/gb/search/$page',
+      '/job-board-api',
       queryParameters: {
-        'what': query,
-        'results_per_page': 20,
+        'page': page,
       },
     );
 
-    final List jobs = response.data['results'];
+    final List jobs = response.data['data'];
+    print(response.data['data'][0]);
 
-    return jobs.map(
+    final filteredJobs = jobs.where(
+      (job) {
+        return job['title']
+            .toString()
+            .toLowerCase()
+            .contains(
+              query.toLowerCase(),
+            );
+      },
+    ).toList();
+
+    return filteredJobs.map(
       (job) => {
-        'job_id': job['id']?.toString() ?? '',
+        'job_id': job['slug'] ?? '',
 
         'job_title': job['title'] ?? '',
 
-        'employer_name':
-            job['company']?['display_name'] ?? '',
+        'employer_name': job['company_name'] ?? '',
 
         'employer_logo': '',
 
-        'job_location':
-            job['location']?['display_name'] ?? '',
+        'job_location': job['location'] ?? 'Remote',
 
-        'job_city':
-            job['location']?['area'] != null &&
-                    (job['location']['area'] as List).isNotEmpty
-                ? job['location']['area'].last
-                : '',
+        'job_city': '',
 
         'job_country': '',
 
-        'job_employment_type': '',
+        'job_employment_type':
+            job['job_types'] != null
+                ? (job['job_types'] as List).join(', ')
+                : '',
 
         'job_description':
             job['description'] ?? '',
 
         'job_apply_link':
-            job['redirect_url'] ?? '',
+            job['url'] ?? '',
 
-        'job_min_salary':
-            job['salary_min'] ?? 0,
+        'job_min_salary': 0,
 
-        'job_max_salary':
-            job['salary_max'] ?? 0,
+        'job_max_salary': 0,
       },
     ).toList();
   }
 
 
-  Future<List<dynamic>> getJobDetail(
-     String id,
-  ) async {
+  // Future<List<dynamic>> getJobDetail(
+  //    String id,
+  // ) async {
 
-    try {
-      //final stopwatch = Stopwatch()..start();
-      final response = await DioClient.dio.get(
-        '/job-details',
-        queryParameters: {
-          'job_id': id,
-        },
-      );
+  //   try {
+  //     final response = await DioClient.dio.get(
+  //       '/job-board-api',
+  //       queryParameters: {
+  //         'job_id': id,
+  //       },
+  //     );
+  //     return response.data['data'];
+  //   } catch (e) {
+  //     print(e);
+  //   }
 
-      //print(response.data);
-    //   stopwatch.stop();
-
-    // print(' API: ${stopwatch.elapsedMilliseconds} ms');
-      return response.data['data'];
-    } catch (e) {
-      print(e);
-    }
-
-    return [];
-  }
+  //   return [];
+  // }
 
 }

@@ -58,9 +58,9 @@ class SearchJobController extends GetxController {
         page: currentPage,
       );
 
-      jobs.value = result;
+    jobs.assignAll(result);
 
-      hasMore = result.isNotEmpty;
+    hasMore = result.length >= 20;
       
     } catch (e) {
       Get.snackbar(
@@ -74,9 +74,7 @@ class SearchJobController extends GetxController {
 
   Future<void> loadMoreJobs() async {
     print('LOAD MORE PAGE: $currentPage');
-    if (isLoadingMore.value) return;
-
-    if (!hasMore) return;
+    if (isLoadingMore.value || !hasMore) return;
 
     try {
       isLoadingMore.value = true;

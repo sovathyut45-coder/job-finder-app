@@ -90,7 +90,7 @@ class SearchView extends GetView<SearchJobController> {
                         onTap: () {
                           Get.toNamed(
                             AppRoutes.jobDetails,
-                            arguments: job.jobId,
+                            arguments: job,
                           );
                         },
                         leading: CircleAvatar(
@@ -111,11 +111,11 @@ class SearchView extends GetView<SearchJobController> {
                         title: Text(
                           job.jobTitle,
                         ),
-                        subtitle: Text(
-                          job.employerName,
-                        ),
+                        // subtitle: Text(
+                        //   job.employerName,
+                        // ),
                         trailing: Text(
-                          job.jobCity,
+                          job.jobLocation,
                         ),
                       ),
                     );
