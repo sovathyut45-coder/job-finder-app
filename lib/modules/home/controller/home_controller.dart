@@ -14,9 +14,6 @@ class HomeController extends GetxController {
   final positions = [
     'Business Development',
     'Sales',
-    'Software',
-    'Marketing',
-    'Product Manager',
     'Design',
     'IT',
     'Operations',

@@ -221,19 +221,26 @@ class SearchView extends GetView<SearchJobController> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+
               ],
             ),
           ),
 
           const SizedBox(height: 12),
+        
 
           Expanded(
             child: Obx(
               () {
+                
                 if (controller.isLoading.value) {
                   return Center(
                     child: CircularProgressIndicator(color: primaryColor),
                   );
+                }
+
+                if(controller.currentQuery.isEmpty){
+                  return _buildSearchHistory();
                 }
 
                 if (controller.jobs.isEmpty) {
@@ -397,4 +404,84 @@ class SearchView extends GetView<SearchJobController> {
       ),
     );
   }
+
+Widget _buildSearchHistory() {
+  return Obx(
+    () => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+         
+          if (controller.searchHistory.isNotEmpty)
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Recent Searches',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+            
+                TextButton(
+                  onPressed: controller.clearSearchHistory,
+                  child: const Text('Clear All'),
+                ),
+              ],
+            ),
+          
+
+            Wrap(
+              spacing: 10,
+              runSpacing: 5,
+              children: controller.searchHistory.map((item) {
+                return Card(
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.history,
+                    ),
+
+                    title: Text(item),
+
+                    onTap: () {
+                      controller.searchController.text =
+                          item;
+
+                      controller.searchJobs();
+                    },
+
+                    trailing: IconButton(
+                      icon: const Icon(Icons.close),
+
+                      onPressed: () {
+                        controller.removeSearchHistory(
+                          item,
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }).toList(),
+            )
+          //  else 
+          //   // Optional: small empty state, keeps layout consistent
+          //   const Padding(
+          //     padding: EdgeInsets.symmetric(vertical: 4),
+          //     child: Text(
+          //       'No recent searches',
+          //       style: TextStyle(
+          //         fontSize: 13,
+          //         color: Colors.grey,
+          //       ),
+          //     ),
+          //   ),
+        ],
+      ),
+    ),
+  );
+}
 }

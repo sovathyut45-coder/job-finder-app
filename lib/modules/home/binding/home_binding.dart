@@ -2,6 +2,7 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:job_finder_app/data/datasource/job_datasource.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';
+import 'package:job_finder_app/modules/RecentJob/binding/recent_job_binding.dart';
 import 'package:job_finder_app/modules/home/controller/home_controller.dart';
 
 class HomeBinding extends Bindings{
@@ -18,5 +19,9 @@ class HomeBinding extends Bindings{
     );
     Get.lazyPut<HomeController>(
       () => HomeController(Get.find<JobRepository>()));
+    
+    //RecentJobBinding().dependencies();
+
+    
   }
 }

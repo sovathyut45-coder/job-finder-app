@@ -12,7 +12,7 @@ import 'package:job_finder_app/initialBinding/initial_binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
   await GetStorage.init();
   runApp(
     DevicePreview(
@@ -36,7 +36,7 @@ class MainApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       getPages: AppPages.routes,
-      initialRoute: AppRoutes.dashboard,
+      initialRoute: AppRoutes.splash,
       initialBinding: InitialBinding(),
      
     );

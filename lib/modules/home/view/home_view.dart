@@ -290,6 +290,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../core/Theme/theme_controller.dart';
@@ -302,6 +303,8 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
     final isDark = themeController.isDark.value;
+    final recentController = Get.find<RecentJobsController>();
+    
 
     // Get theme-aware colors
     final primaryColor = Theme.of(context).primaryColor;
@@ -405,6 +408,77 @@ class HomeView extends GetView<HomeController> {
                   );
                 }).toList(),
               ),
+
+              const SizedBox(height: 24),
+
+Obx(() {
+  if (recentController.recentJobs.isEmpty) {
+    return const SizedBox();
+  }
+
+  return Column(
+    crossAxisAlignment:
+        CrossAxisAlignment.start,
+    children: [
+
+      const Text(
+        'Recently Viewed',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+
+      const SizedBox(height: 12),
+
+      ...recentController.recentJobs
+          .take(5)
+          .map((job) {
+        return Card(
+          margin:
+              const EdgeInsets.only(
+            bottom: 10,
+          ),
+          child: ListTile(
+            onTap: () {
+              Get.toNamed(
+                AppRoutes.jobDetails,
+                arguments: job,
+              );
+            },
+
+            leading: CircleAvatar(
+              child: Icon(
+                Icons.history,
+              ),
+            ),
+
+            title: Text(
+              job.jobTitle,
+              maxLines: 1,
+              overflow:
+                  TextOverflow.ellipsis,
+            ),
+
+            subtitle: Text(
+              job.employerName,
+              maxLines: 1,
+              overflow:
+                  TextOverflow.ellipsis,
+            ),
+
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+            ),
+          ),
+        );
+      }),
+    ],
+  );
+}),
+
+              
 
               const SizedBox(height: 30),
 

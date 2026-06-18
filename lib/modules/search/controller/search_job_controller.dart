@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:job_finder_app/data/model/job_model.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';
 
@@ -16,6 +17,8 @@ class SearchJobController extends GetxController {
 
   final searchController = TextEditingController();
   final scrollController = ScrollController();
+  final box = GetStorage();
+  final searchHistory = <String>[].obs;
 
   Timer? _debounce;
 
@@ -28,6 +31,8 @@ class SearchJobController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    searchHistory.value = List<String>.from(box.read('search_history') ?? []);
 
     currentQuery = Get.arguments ?? '';
 
@@ -48,7 +53,6 @@ class SearchJobController extends GetxController {
   }
 
   Future<void> fetchJobs() async {
-    print('Searching: $currentQuery page=$currentPage');
     if (isLoading.value) return;
     try {
       isLoading.value = true;
@@ -73,7 +77,7 @@ class SearchJobController extends GetxController {
   }
 
   Future<void> loadMoreJobs() async {
-    print('LOAD MORE PAGE: $currentPage');
+    //print('LOAD MORE PAGE: $currentPage');
     if (isLoadingMore.value || !hasMore) return;
 
     try {
@@ -126,12 +130,15 @@ class SearchJobController extends GetxController {
         fetchJobs();
       },
     );
+    
   }
 
   Future<void> searchJobs() async {
     final query = searchController.text.trim();
 
     if (query.isEmpty) return;
+
+    saveSearchHistory(query);
 
     currentQuery = query;
 
@@ -158,5 +165,30 @@ class SearchJobController extends GetxController {
     searchController.dispose();
 
     super.onClose();
+  }
+
+  void saveSearchHistory(String query) {
+    if(query.isEmpty) return;
+    searchHistory.remove(query);
+    searchHistory.insert(0, query);
+    if(searchHistory.length > 5){
+      searchHistory.removeLast();
+    }
+    box.write('search_history', searchHistory);
+  }
+
+  void removeSearchHistory(String keyword) {
+    searchHistory.remove(keyword);
+
+    box.write(
+      'search_history',
+      searchHistory.toList(),
+    );
+  }
+
+  void clearSearchHistory() {
+    searchHistory.clear();
+
+    box.remove('search_history');
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
+import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:job_finder_app/modules/home/controller/home_controller.dart';
 import 'package:job_finder_app/modules/home/view/home_view.dart';
@@ -23,6 +24,8 @@ class DashboardView extends GetView<DashboardController>{
       'Saved Jobs',
       'Profile',
     ];
+
+    print('Dashboard Build');
     
     return Obx(
       ()=> Scaffold(
@@ -42,6 +45,15 @@ class DashboardView extends GetView<DashboardController>{
                   onPressed: () {
                     theme.toggleTheme();
                   },
+                );
+              },
+            ),
+
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Get.toNamed(
+                  AppRoutes.setting,
                 );
               },
             ),
