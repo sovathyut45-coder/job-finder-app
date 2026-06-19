@@ -279,7 +279,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: textPrimary, // Fixed: was incorrectly using textSecondary before
+                color: textPrimary, 
               ),
             ),
             subtitle: Padding(

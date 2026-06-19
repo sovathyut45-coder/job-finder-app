@@ -136,6 +136,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
+import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
+import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
 import 'package:job_finder_app/modules/search/controller/search_job_controller.dart';
 
 class SearchView extends GetView<SearchJobController> {
@@ -234,8 +236,13 @@ class SearchView extends GetView<SearchJobController> {
               () {
                 
                 if (controller.isLoading.value) {
-                  return Center(
-                    child: CircularProgressIndicator(color: primaryColor),
+                  return SkeletonLoading(
+                    child: ListView.builder(
+                      itemCount: 8,
+                      itemBuilder: (_,__){
+                        return const JobCardSkeleton();
+                      },
+                    ),
                   );
                 }
 

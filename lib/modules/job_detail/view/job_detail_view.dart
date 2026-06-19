@@ -851,7 +851,41 @@ class JobDetailView extends GetView<JobDetailController> {
                       shadowColor: primaryColor.withOpacity(0.3),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    onPressed: () => controller.applyJob(job.applyLink),
+                    onPressed: () {
+                      Get.dialog(
+                        AlertDialog(
+                          title: const Text(
+                            'Apply Job',
+                          ),
+                          content: const Text(
+                            'You are about to open the company application page.',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text(
+                                'Cancel',
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+
+                                controller.applyJob(
+                                  job.applyLink,
+                                );
+                              },
+                              child: const Text(
+                                'Continue',
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    // onPressed: () => controller.applyJob(job.applyLink),
                     icon: const Icon(Icons.open_in_new),
                     label: const Text(
                       'Apply Now',

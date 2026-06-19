@@ -290,6 +290,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
+import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
 import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
 
 import '../../../core/routes/app_routes.dart';
@@ -411,72 +413,72 @@ class HomeView extends GetView<HomeController> {
 
               const SizedBox(height: 24),
 
-Obx(() {
-  if (recentController.recentJobs.isEmpty) {
-    return const SizedBox();
-  }
+              Obx(() {
+                if (recentController.recentJobs.isEmpty) {
+                  return const SizedBox();
+                }
 
-  return Column(
-    crossAxisAlignment:
-        CrossAxisAlignment.start,
-    children: [
+                return Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
 
-      const Text(
-        'Recently Viewed',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+                    const Text(
+                      'Recently Viewed',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
 
-      const SizedBox(height: 12),
+                    const SizedBox(height: 12),
 
-      ...recentController.recentJobs
-          .take(5)
-          .map((job) {
-        return Card(
-          margin:
-              const EdgeInsets.only(
-            bottom: 10,
-          ),
-          child: ListTile(
-            onTap: () {
-              Get.toNamed(
-                AppRoutes.jobDetails,
-                arguments: job,
-              );
-            },
+                    ...recentController.recentJobs
+                        .take(5)
+                        .map((job) {
+                      return Card(
+                        margin:
+                            const EdgeInsets.only(
+                          bottom: 10,
+                        ),
+                        child: ListTile(
+                          onTap: () {
+                            Get.toNamed(
+                              AppRoutes.jobDetails,
+                              arguments: job,
+                            );
+                          },
 
-            leading: CircleAvatar(
-              child: Icon(
-                Icons.history,
-              ),
-            ),
+                          leading: CircleAvatar(
+                            child: Icon(
+                              Icons.history,
+                            ),
+                          ),
 
-            title: Text(
-              job.jobTitle,
-              maxLines: 1,
-              overflow:
-                  TextOverflow.ellipsis,
-            ),
+                          title: Text(
+                            job.jobTitle,
+                            maxLines: 1,
+                            overflow:
+                                TextOverflow.ellipsis,
+                          ),
 
-            subtitle: Text(
-              job.employerName,
-              maxLines: 1,
-              overflow:
-                  TextOverflow.ellipsis,
-            ),
+                          subtitle: Text(
+                            job.employerName,
+                            maxLines: 1,
+                            overflow:
+                                TextOverflow.ellipsis,
+                          ),
 
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              size: 16,
-            ),
-          ),
-        );
-      }),
-    ],
-  );
-}),
+                          trailing: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                );
+              }),
 
               
 
@@ -509,10 +511,12 @@ Obx(() {
               const SizedBox(height: 12),
 
               if (controller.isLoading.value)
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: CircularProgressIndicator(color: primaryColor),
+                SkeletonLoading(
+                  child: Column(
+                    children: List.generate(
+                      5,
+                      (index) => const JobCardSkeleton(),
+                    ),
                   ),
                 )
               else if (controller.jobs.isEmpty)
