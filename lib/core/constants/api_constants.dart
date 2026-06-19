@@ -1,4 +1,12 @@
-class ApiConstants {
-  static const String baseUrl = 'https://jsearch.p.rapidapi.com';
-  static const String apiKey = '0f289dc6ccmsh599a6cc12521690p159834jsn17e2ca6fc834';
+
+class ApiConstant {
+  // static const String baseUrl =
+  //     'https://api.adzuna.com/v1/api/jobs';
+
+  // static String get appId =>
+  //     dotenv.env['ADZUNA_APP_ID'] ?? '';
+
+  // static String get appKey =>
+  //     dotenv.env['ADZUNA_APP_KEY'] ?? '';
+  static const String baseUrl = 'https://www.arbeitnow.com/api';
 }

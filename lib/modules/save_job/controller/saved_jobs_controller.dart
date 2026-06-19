@@ -9,7 +9,7 @@ class SavedJobsController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    savedJobs.value = box.read('savedJobs') ?? [];
+    savedJobs.value = box.read('save_jobs') ?? [];
   }
 
   void loadSavedJobs() {

@@ -1,53 +1,84 @@
 import 'package:job_finder_app/core/network/dio_client.dart';
 
 class JobDatasource {
-Future<List<dynamic>> getJobs({
-  required String query,
-  int page = 1,
-  int numPages = 1,
-}) async {
-  //final stopwatch = Stopwatch()..start();
-  final response = await DioClient.dio.get(
-    '/search',
-    queryParameters: {
-      'query': query,
-      'page': page,
-      'num_pages': numPages,
-    },
-  );
+  Future<List<dynamic>> getJobs({
+    required String query,
+    int page = 1,
+  }) async {
 
-    // stopwatch.stop();
+    final response = await DioClient.dio.get(
+      '/job-board-api',
+      queryParameters: {
+        'page': page,
+      },
+    );
 
-    // print('Detail API: ${stopwatch.elapsedMilliseconds} ms');
-  
-  return response.data['data'];
-  
-}
+    final List jobs = response.data['data'];
+    //print(response.data['data'][0]);
 
+    final filteredJobs = jobs.where(
+      (job) {
+        return job['title']
+            .toString()
+            .toLowerCase()
+            .contains(
+              query.toLowerCase(),
+            );
+      },
+    ).toList();
 
-  Future<List<dynamic>> getJobDetail(
-     String id,
-  ) async {
+    return filteredJobs.map(
+      (job) => {
+        'job_id': job['slug'] ?? '',
 
-    try {
-      //final stopwatch = Stopwatch()..start();
-      final response = await DioClient.dio.get(
-        '/job-details',
-        queryParameters: {
-          'job_id': id,
-        },
-      );
+        'job_title': job['title'] ?? '',
 
-      //print(response.data);
-    //   stopwatch.stop();
+        'employer_name': job['company_name'] ?? '',
 
-    // print(' API: ${stopwatch.elapsedMilliseconds} ms');
-      return response.data['data'];
-    } catch (e) {
-      print(e);
-    }
+        'employer_logo': '',
 
-    return [];
+        'job_location': job['location'] ?? 'Remote',
+
+        'job_city': '',
+
+        'job_country': '',
+
+        'job_employment_type':
+            job['job_types'] != null
+                ? (job['job_types'] as List).join(', ')
+                : '',
+
+        'job_description':
+            job['description'] ?? '',
+
+        'job_apply_link':
+            job['url'] ?? '',
+
+        'job_min_salary': 0,
+
+        'job_max_salary': 0,
+      },
+    ).toList();
   }
+
+
+  // Future<List<dynamic>> getJobDetail(
+  //    String id,
+  // ) async {
+
+  //   try {
+  //     final response = await DioClient.dio.get(
+  //       '/job-board-api',
+  //       queryParameters: {
+  //         'job_id': id,
+  //       },
+  //     );
+  //     return response.data['data'];
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   return [];
+  // }
 
 }

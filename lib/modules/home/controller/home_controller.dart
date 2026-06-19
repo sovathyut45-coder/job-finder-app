@@ -12,11 +12,12 @@ class HomeController extends GetxController {
   final jobs = <JobModel>[].obs;
 
   final positions = [
-    'Flutter Developer',
-    'Backend Developer',
-    'UI/UX Designer',
-    'Mobile Developer',
-    'Data Analyst',
+    'Business Development',
+    'Sales',
+    'Design',
+    'IT',
+    'Operations',
+    'Finance',
   ];
 
   @override
@@ -30,7 +31,7 @@ class HomeController extends GetxController {
       isLoading.value = true;
 
       final result = await repository.getJobs(
-        query: 'Software Engineer',
+        query: 'Marketing',
         page: 1,
       );
 

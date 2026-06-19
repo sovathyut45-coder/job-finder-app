@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:job_finder_app/data/datasource/job_datasource.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';
+import 'package:job_finder_app/modules/RecentJob/binding/recent_job_binding.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:job_finder_app/modules/home/binding/home_binding.dart';
 import 'package:job_finder_app/modules/home/controller/home_controller.dart';
 
 class DashboardBinding extends Bindings {
@@ -18,14 +20,12 @@ class DashboardBinding extends Bindings {
       ),
     );
 
-    Get.lazyPut<HomeController>(
-      () => HomeController(
-        Get.find<JobRepository>(),
-      ),
-    );
+    HomeBinding().dependencies();
 
     Get.lazyPut<DashboardController>(
       () => DashboardController(),
     );
+
+    RecentJobBinding().dependencies();
   }
 }

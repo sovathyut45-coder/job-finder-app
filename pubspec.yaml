@@ -17,6 +17,11 @@ dependencies:
   file_picker: ^10.3.2
   device_preview: ^1.2.0
   url_launcher: ^6.3.1
+  flutter_dotenv: ^5.2.1
+  flutter_html: ^3.0.0
+  share_plus: ^11.1.0
+  flutter_native_splash: ^2.4.0
+  skeletonizer: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +30,23 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - .env
+    - assets/images/
+
+flutter_native_splash:
+  color: "#0F172A"
+  image: assets/images/logo1.png
+
+  android: true
+  ios: true
+  web: true
+
+  fullscreen: true
+
+  android_12:
+    color: "#0F172A"
+    image: assets/images/logo1.png
+    icon_background_color: "#0F172A"
+    
