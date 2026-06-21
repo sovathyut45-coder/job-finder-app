@@ -588,10 +588,23 @@ class JobDetailView extends GetView<JobDetailController> {
                     savedController.removeJob(job.jobId);
                   } else {
                     savedController.saveJob(job);
+
+                    Get.showSnackbar(
+                      GetSnackBar(
+                        message:
+                            'Added to favorites',
+                        duration:
+                            const Duration(seconds: 2),
+                      ),
+                    );
                   }
                 },
                 icon: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  ),
                   child: Icon(
                     isSaved
                         ? Icons.favorite_rounded
@@ -654,7 +667,7 @@ class JobDetailView extends GetView<JobDetailController> {
       body: Obx(
         () {
           if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator(color: primaryColor));
+              
           }
 
           if (controller.error.value.isNotEmpty) {
@@ -851,40 +864,161 @@ class JobDetailView extends GetView<JobDetailController> {
                       shadowColor: primaryColor.withOpacity(0.3),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    onPressed: () {
-                      Get.dialog(
-                        AlertDialog(
-                          title: const Text(
-                            'Apply Job',
-                          ),
-                          content: const Text(
-                            'You are about to open the company application page.',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text(
-                                'Cancel',
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
+                    // onPressed: () {
+                    //   Get.dialog(
+                    //     AlertDialog(
+                    //       title: const Text(
+                    //         'Apply Job',
+                    //       ),
+                    //       content: const Text(
+                    //         'You are about to open the company application page.',
+                    //       ),
+                    //       actions: [
+                    //         TextButton(
+                    //           onPressed: () {
+                    //             Get.back();
+                    //           },
+                    //           child: const Text(
+                    //             'Cancel',
+                    //           ),
+                    //         ),
+                    //         TextButton(
+                    //           onPressed: () {
+                    //             Get.back();
 
-                                controller.applyJob(
-                                  job.applyLink,
-                                );
-                              },
-                              child: const Text(
-                                'Continue',
-                              ),
+                    //             controller.applyJob(
+                    //               job.applyLink,
+                    //             );
+                    //           },
+                    //           child: const Text(
+                    //             'Continue',
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   );
+                    // },
+
+                    // Bottom Sheet
+                    onPressed: () {
+                      Get.bottomSheet(
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(24),
                             ),
-                          ],
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade400,
+                                  borderRadius:
+                                      BorderRadius.circular(10),
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
+
+                              const CircleAvatar(
+                                radius: 32,
+                                child: Icon(
+                                  Icons.open_in_new,
+                                  size: 32,
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
+
+                              const Text(
+                                'Apply Job',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+                              
+                              Text(
+                                job.employerName,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              Text(
+                                job.jobTitle,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              Text(
+                                'You are about to open the company application page in your browser.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color
+                                      ?.withOpacity(0.7),
+                                ),
+                              ),
+
+                              const SizedBox(height: 24),
+
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: const Text(
+                                        'Cancel',
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 12),
+
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        Get.back();
+
+                                        await controller
+                                            .applyJob(
+                                          job.applyLink,
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Continue',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 12),
+                            ],
+                          ),
                         ),
+                        isScrollControlled: true,
                       );
                     },
+                    
                     // onPressed: () => controller.applyJob(job.applyLink),
                     icon: const Icon(Icons.open_in_new),
                     label: const Text(

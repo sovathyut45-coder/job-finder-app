@@ -212,6 +212,21 @@ class SearchView extends GetView<SearchJobController> {
             ),
           ),
 
+          SizedBox(
+            height: 45,
+            child: Obx(
+              () => ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildFilter('All'),
+                  _buildFilter('Remote'),
+                  _buildFilter('Full Time'),
+                  _buildFilter('Part Time'),
+                ],
+              ),
+            ),
+          ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
@@ -491,4 +506,25 @@ Widget _buildSearchHistory() {
     ),
   );
 }
+
+Widget _buildFilter(String filter) {
+  final selected =
+      controller.selectedFilter.value ==
+      filter;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 4,),
+      child: ChoiceChip(
+        label: Text(filter),
+        selected: selected,
+        onSelected: (_) {
+          controller.changeFilter(
+            filter,
+          );
+        },
+      ),
+    );
+  }
 }
