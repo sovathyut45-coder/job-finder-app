@@ -9,11 +9,11 @@ class SavedJobsController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    savedJobs.value = box.read('save_jobs') ?? [];
+    loadSavedJobs();
   }
 
   void loadSavedJobs() {
-    final data = box.read('save_jobs');
+    final data = box.read('save_jobs') ?? [];
     if(data != null){
       savedJobs.value = List<Map<String, dynamic>>.from(data).map((job) => JobModel.fromJson(job)).toList(); // Convert to List<JobModel>>
     }

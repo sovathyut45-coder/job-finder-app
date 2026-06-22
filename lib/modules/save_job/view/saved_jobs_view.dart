@@ -220,7 +220,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
           ),
           const SizedBox(height: 20),
           Text(
-            'No Saved Jobs Yet',
+            'no_saved_jobs'.tr,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -229,7 +229,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
           ),
           const SizedBox(height: 10),
           Text(
-            'Save interesting jobs to view them later',
+            'save_interesting_jobs_to_view_them_later'.tr,
             style: TextStyle(
               fontSize: 14,
               color: textSecondary,
@@ -299,7 +299,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
                 color: accentColor,
                 size: 22,
               ),
-              tooltip: 'Remove job',
+              tooltip: 'remove_job'.tr,
             ),
           ),
         );

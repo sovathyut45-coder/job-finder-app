@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
-import 'package:job_finder_app/modules/Sitting/setting_view.dart';
+import 'package:job_finder_app/modules/Sitting/binding/setting_binding.dart';
+import 'package:job_finder_app/modules/Sitting/view/setting_view.dart';
 import 'package:job_finder_app/modules/dashboard/binding/dashboard_binding.dart';
 import 'package:job_finder_app/modules/dashboard/view/dashboard_view.dart';
 import 'package:job_finder_app/modules/home/binding/home_binding.dart';
@@ -40,7 +41,8 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.setting,
-      page: ()=> SettingView(), 
+      page: ()=> SettingView(),
+      binding: SettingBinding()
     ),
     GetPage(
       name: AppRoutes.splash,

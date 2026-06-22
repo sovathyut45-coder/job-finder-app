@@ -329,7 +329,7 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(height: 10),
 
               Text(
-                'Find Your Dream Job',
+                'find_your_dream_job'.tr,
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -340,7 +340,7 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(height: 8),
 
               Text(
-                'Discover opportunities that match your skills',
+                'discover_opportunities_that_match_your_skills'.tr,
                 style: TextStyle(
                   color: textSecondary,
                   fontSize: 16,
@@ -369,7 +369,7 @@ class HomeView extends GetView<HomeController> {
                       Icon(Icons.search, color: primaryColor),
                       const SizedBox(width: 10),
                       Text(
-                        'Search jobs...',
+                        'search_jobs...'.tr,
                         style: TextStyle(color: textSecondary),
                       ),
                     ],
@@ -380,7 +380,7 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(height: 30),
 
               Text(
-                'Popular Positions',
+                'popular_positions'.tr,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -423,8 +423,8 @@ class HomeView extends GetView<HomeController> {
                       CrossAxisAlignment.start,
                   children: [
 
-                    const Text(
-                      'Recently Viewed',
+                     Text(
+                      'recent_views'.tr,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -488,7 +488,7 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Popular Jobs',
+                    'popular_jobs'.tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -503,7 +503,7 @@ class HomeView extends GetView<HomeController> {
                       );
                     },
                     style: TextButton.styleFrom(foregroundColor: primaryColor),
-                    child: const Text('See All', style: TextStyle(fontWeight: FontWeight.w600)),
+                    child: Text('see_all'.tr, style: TextStyle(fontWeight: FontWeight.w600)),
                   ),
                 ],
               ),
@@ -524,7 +524,7 @@ class HomeView extends GetView<HomeController> {
                   padding: const EdgeInsets.all(24),
                   child: Center(
                     child: Text(
-                      'No jobs found',
+                      'no_job_found'.tr,
                       style: TextStyle(color: textSecondary, fontSize: 16),
                     ),
                   ),

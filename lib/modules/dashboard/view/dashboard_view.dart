@@ -19,12 +19,12 @@ class DashboardView extends GetView<DashboardController>{
       ProfileView(),
     ];
     final List<String> titles = [
-      'Home',
-      'Saved Jobs',
-      'Profile',
+      'home'.tr,
+      'saved_jobs'.tr,
+      'profile'.tr,
     ];
 
-    print('Dashboard Build');
+    //print('Dashboard Build');
     
     return Obx(
       ()=> Scaffold(
@@ -62,19 +62,19 @@ class DashboardView extends GetView<DashboardController>{
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: controller.currentIndex.value,
           onTap: controller.changeIndex,
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: 'home'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
-              label: 'Saved Jobs',
+              label: 'saved_jobs'.tr,
             ),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'Profile',
+              label: 'profile'.tr,
             )
           ],
         ),

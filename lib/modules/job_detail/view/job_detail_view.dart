@@ -565,8 +565,8 @@ class JobDetailView extends GetView<JobDetailController> {
           backgroundColor: primaryColor,
           foregroundColor: Colors.white,
 
-          title: const Text(
-            'Job Details',
+          title: Text(
+            'job_details'.tr,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -582,21 +582,29 @@ class JobDetailView extends GetView<JobDetailController> {
               final isSaved = savedController.isSaved(job.jobId);
 
               return IconButton(
-                tooltip: isSaved ? 'Remove from Saved' : 'Save Job',
+                tooltip: isSaved ? 'remove_from_favorites'.tr : 'save_jobs'.tr,
                 onPressed: () {
                   if (isSaved) {
                     savedController.removeJob(job.jobId);
                   } else {
                     savedController.saveJob(job);
 
-                    Get.showSnackbar(
-                      GetSnackBar(
-                        message:
-                            'Added to favorites',
-                        duration:
-                            const Duration(seconds: 2),
-                      ),
+                    Get.snackbar(
+                      'success'.tr,
+                      'Added to favorites'.tr,
+                      duration: const Duration(seconds: 2),
+                      backgroundColor: accentColor,
+                      colorText: Colors.white,
                     );
+
+                    // Get.showSnackbar(
+                    //   GetSnackBar(
+                    //     message:
+                    //         'Added to favorites',
+                    //     duration:
+                    //         const Duration(seconds: 2),
+                    //   ),
+                    // );
                   }
                 },
                 icon: AnimatedSwitcher(
@@ -620,8 +628,8 @@ class JobDetailView extends GetView<JobDetailController> {
             Obx(
               () => IconButton(
                 tooltip: theme.isDark.value
-                    ? 'Light Mode'
-                    : 'Dark Mode',
+                    ? 'light_mode'.tr
+                    : 'dark_mode'.tr,
                 onPressed: theme.toggleTheme,
                 icon: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
@@ -641,7 +649,7 @@ class JobDetailView extends GetView<JobDetailController> {
               final job = controller.job.value;
 
               return IconButton(
-                tooltip: 'Share',
+                tooltip: 'share'.tr,
                 onPressed: () async {
                   if (job == null) return;
 
@@ -650,8 +658,8 @@ class JobDetailView extends GetView<JobDetailController> {
                   );
 
                   Get.snackbar(
-                    "Shared",
-                    "Link copied (Web doesn't support share sheet)",
+                    "shared".tr,
+                    "Link copied (Web doesn't support share sheet)".tr,
                   );
                 },     
                 icon: const Icon(
@@ -687,7 +695,7 @@ class JobDetailView extends GetView<JobDetailController> {
           if (job == null) {
             return Center(
               child: Text(
-                'No job details available',
+                'no_job_available'.tr,
                 style: TextStyle(color: textSecondary, fontSize: 16),
               ),
             );
@@ -754,7 +762,7 @@ class JobDetailView extends GetView<JobDetailController> {
 
                 /// JOB INFO
                 Text(
-                  'Job Information',
+                  'job_information'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -823,7 +831,7 @@ class JobDetailView extends GetView<JobDetailController> {
 
                 /// DESCRIPTION
                 Text(
-                  'Job Description',
+                  'job_description'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -935,8 +943,8 @@ class JobDetailView extends GetView<JobDetailController> {
 
                               const SizedBox(height: 20),
 
-                              const Text(
-                                'Apply Job',
+                              Text(
+                                'apply_job'.tr,
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -965,7 +973,7 @@ class JobDetailView extends GetView<JobDetailController> {
                               const SizedBox(height: 10),
 
                               Text(
-                                'You are about to open the company application page in your browser.',
+                                'you_are_about_to_open_the_company_application_page'.tr,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Theme.of(context)
@@ -985,8 +993,8 @@ class JobDetailView extends GetView<JobDetailController> {
                                       onPressed: () {
                                         Get.back();
                                       },
-                                      child: const Text(
-                                        'Cancel',
+                                      child: Text(
+                                        'cancel'.tr,
                                       ),
                                     ),
                                   ),
@@ -1003,8 +1011,8 @@ class JobDetailView extends GetView<JobDetailController> {
                                           job.applyLink,
                                         );
                                       },
-                                      child: const Text(
-                                        'Continue',
+                                      child: Text(
+                                        'continue'.tr,
                                       ),
                                     ),
                                   ),
@@ -1021,8 +1029,8 @@ class JobDetailView extends GetView<JobDetailController> {
                     
                     // onPressed: () => controller.applyJob(job.applyLink),
                     icon: const Icon(Icons.open_in_new),
-                    label: const Text(
-                      'Apply Now',
+                    label: Text(
+                      'apply_now'.tr,
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),

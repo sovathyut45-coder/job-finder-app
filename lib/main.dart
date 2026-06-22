@@ -9,6 +9,7 @@ import 'package:job_finder_app/core/Theme/app_theme.dart';
 import 'package:job_finder_app/core/routes/app_pages.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/initialBinding/initial_binding.dart';
+import 'package:job_finder_app/translations/app_translation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,9 @@ class MainApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      locale: DevicePreview.locale(context),
+      translations: AppTranslation(),
+      fallbackLocale: const Locale('en', 'US'),
+      locale: Locale('en', 'US'),
       builder: DevicePreview.appBuilder,
       getPages: AppPages.routes,
       initialRoute: AppRoutes.splash,
