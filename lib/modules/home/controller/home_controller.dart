@@ -31,7 +31,7 @@ class HomeController extends GetxController {
       isLoading.value = true;
 
       final result = await repository.getJobs(
-        query: 'Marketing',
+        query: 'IT',
         page: 1,
       );
 

@@ -24,17 +24,4 @@ Future<List<JobModel>> getJobs({
         .toList();
   }
 
-  // Future<List<JobModel>> getJobDetail(String id) async {
-  //   final data = await datasource.getJobDetail(id);
-
-  // //   for (final job in data) {
-  // //   print(job['employer_logo']);  // I Change to Arbeitnow Job Board API
-  // // }
-
-  //   return data.map<JobModel>(
-  //     (job) => JobModel.fromJson(job)
-  //   )
-  //   .toList();
-    
-  // }
 }

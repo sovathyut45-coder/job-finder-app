@@ -28,6 +28,8 @@ class SearchJobController extends GetxController {
 
   bool hasMore = true;
 
+  final selectedFilter = 'All'.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -45,6 +47,15 @@ class SearchJobController extends GetxController {
     scrollController.addListener(_onScroll);
   }
 
+  void changeFilter(String filter) {
+    selectedFilter.value = filter;
+
+    currentPage = 1;
+    hasMore = true;
+
+    fetchJobs();
+  }
+
   void _onScroll() {
     if (scrollController.position.pixels >=
         scrollController.position.maxScrollExtent - 200) {
@@ -53,7 +64,21 @@ class SearchJobController extends GetxController {
   }
 
   Future<void> fetchJobs() async {
+    String query = currentQuery;
     if (isLoading.value) return;
+    
+    if (selectedFilter.value == 'Remote') {
+        query = '$query Remote';
+    }
+
+    if (selectedFilter.value == 'Full Time') {
+      query = '$query Full Time';
+    }
+
+    if (selectedFilter.value == 'Part Time') {
+      query = '$query Part Time';
+    }
+
     try {
       isLoading.value = true;
 

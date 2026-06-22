@@ -7,7 +7,7 @@ class SplashView extends GetView<SplashController> {
 
   @override
   Widget build(BuildContext context) {
-     print('SplashView Build');
+     //print('SplashView Build');
     print(controller);
     return Scaffold(
       body: Center(
@@ -22,8 +22,8 @@ class SplashView extends GetView<SplashController> {
 
             const SizedBox(height: 20),
 
-            const Text(
-              'Job Finder',
+             Text(
+              'job_finder'.tr,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight:

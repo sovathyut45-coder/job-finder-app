@@ -163,8 +163,8 @@ class SearchView extends GetView<SearchJobController> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: primaryColor,
-        title: const Text(
-          'Search Jobs',
+        title:  Text(
+          'search_jobs'.tr,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -198,7 +198,7 @@ class SearchView extends GetView<SearchJobController> {
                 },
                 style: TextStyle(color: textPrimary),
                 decoration: InputDecoration(
-                  hintText: 'Search jobs...',
+                  hintText: 'search_jobs...'.tr,
                   hintStyle: TextStyle(color: textSecondary),
                   prefixIcon: Icon(Icons.search, color: primaryColor),
                   suffixIcon: IconButton(
@@ -212,12 +212,27 @@ class SearchView extends GetView<SearchJobController> {
             ),
           ),
 
+          SizedBox(
+            height: 45,
+            child: Obx(
+              () => ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildFilter('All'),
+                  _buildFilter('Remote'),
+                  _buildFilter('Full Time'),
+                  _buildFilter('Part Time'),
+                ],
+              ),
+            ),
+          ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
                 Text(
-                  'Results',
+                  'results'.tr,
                   style: TextStyle(
                     color: textPrimary,
                     fontWeight: FontWeight.w600,
@@ -262,7 +277,7 @@ class SearchView extends GetView<SearchJobController> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'No jobs found',
+                          'no_jobs_found'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             color: textSecondary,
@@ -426,8 +441,8 @@ Widget _buildSearchHistory() {
               mainAxisAlignment:
                   MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Recent Searches',
+                 Text(
+                  'recent_jobs'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -436,7 +451,7 @@ Widget _buildSearchHistory() {
             
                 TextButton(
                   onPressed: controller.clearSearchHistory,
-                  child: const Text('Clear All'),
+                  child:  Text('clear_all'.tr),
                 ),
               ],
             ),
@@ -491,4 +506,25 @@ Widget _buildSearchHistory() {
     ),
   );
 }
+
+Widget _buildFilter(String filter) {
+  final selected =
+      controller.selectedFilter.value ==
+      filter;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 4,),
+      child: ChoiceChip(
+        label: Text(filter),
+        selected: selected,
+        onSelected: (_) {
+          controller.changeFilter(
+            filter,
+          );
+        },
+      ),
+    );
+  }
 }

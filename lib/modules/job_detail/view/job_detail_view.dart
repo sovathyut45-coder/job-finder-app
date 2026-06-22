@@ -565,8 +565,8 @@ class JobDetailView extends GetView<JobDetailController> {
           backgroundColor: primaryColor,
           foregroundColor: Colors.white,
 
-          title: const Text(
-            'Job Details',
+          title: Text(
+            'job_details'.tr,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -582,16 +582,37 @@ class JobDetailView extends GetView<JobDetailController> {
               final isSaved = savedController.isSaved(job.jobId);
 
               return IconButton(
-                tooltip: isSaved ? 'Remove from Saved' : 'Save Job',
+                tooltip: isSaved ? 'remove_from_favorites'.tr : 'save_jobs'.tr,
                 onPressed: () {
                   if (isSaved) {
                     savedController.removeJob(job.jobId);
                   } else {
                     savedController.saveJob(job);
+
+                    Get.snackbar(
+                      'success'.tr,
+                      'Added to favorites'.tr,
+                      duration: const Duration(seconds: 2),
+                      backgroundColor: accentColor,
+                      colorText: Colors.white,
+                    );
+
+                    // Get.showSnackbar(
+                    //   GetSnackBar(
+                    //     message:
+                    //         'Added to favorites',
+                    //     duration:
+                    //         const Duration(seconds: 2),
+                    //   ),
+                    // );
                   }
                 },
                 icon: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  ),
                   child: Icon(
                     isSaved
                         ? Icons.favorite_rounded
@@ -607,8 +628,8 @@ class JobDetailView extends GetView<JobDetailController> {
             Obx(
               () => IconButton(
                 tooltip: theme.isDark.value
-                    ? 'Light Mode'
-                    : 'Dark Mode',
+                    ? 'light_mode'.tr
+                    : 'dark_mode'.tr,
                 onPressed: theme.toggleTheme,
                 icon: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
@@ -628,7 +649,7 @@ class JobDetailView extends GetView<JobDetailController> {
               final job = controller.job.value;
 
               return IconButton(
-                tooltip: 'Share',
+                tooltip: 'share'.tr,
                 onPressed: () async {
                   if (job == null) return;
 
@@ -637,8 +658,8 @@ class JobDetailView extends GetView<JobDetailController> {
                   );
 
                   Get.snackbar(
-                    "Shared",
-                    "Link copied (Web doesn't support share sheet)",
+                    "shared".tr,
+                    "Link copied (Web doesn't support share sheet)".tr,
                   );
                 },     
                 icon: const Icon(
@@ -654,7 +675,7 @@ class JobDetailView extends GetView<JobDetailController> {
       body: Obx(
         () {
           if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator(color: primaryColor));
+              
           }
 
           if (controller.error.value.isNotEmpty) {
@@ -674,7 +695,7 @@ class JobDetailView extends GetView<JobDetailController> {
           if (job == null) {
             return Center(
               child: Text(
-                'No job details available',
+                'no_job_available'.tr,
                 style: TextStyle(color: textSecondary, fontSize: 16),
               ),
             );
@@ -741,7 +762,7 @@ class JobDetailView extends GetView<JobDetailController> {
 
                 /// JOB INFO
                 Text(
-                  'Job Information',
+                  'job_information'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -810,7 +831,7 @@ class JobDetailView extends GetView<JobDetailController> {
 
                 /// DESCRIPTION
                 Text(
-                  'Job Description',
+                  'job_description'.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -851,44 +872,165 @@ class JobDetailView extends GetView<JobDetailController> {
                       shadowColor: primaryColor.withOpacity(0.3),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    onPressed: () {
-                      Get.dialog(
-                        AlertDialog(
-                          title: const Text(
-                            'Apply Job',
-                          ),
-                          content: const Text(
-                            'You are about to open the company application page.',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text(
-                                'Cancel',
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
+                    // onPressed: () {
+                    //   Get.dialog(
+                    //     AlertDialog(
+                    //       title: const Text(
+                    //         'Apply Job',
+                    //       ),
+                    //       content: const Text(
+                    //         'You are about to open the company application page.',
+                    //       ),
+                    //       actions: [
+                    //         TextButton(
+                    //           onPressed: () {
+                    //             Get.back();
+                    //           },
+                    //           child: const Text(
+                    //             'Cancel',
+                    //           ),
+                    //         ),
+                    //         TextButton(
+                    //           onPressed: () {
+                    //             Get.back();
 
-                                controller.applyJob(
-                                  job.applyLink,
-                                );
-                              },
-                              child: const Text(
-                                'Continue',
-                              ),
+                    //             controller.applyJob(
+                    //               job.applyLink,
+                    //             );
+                    //           },
+                    //           child: const Text(
+                    //             'Continue',
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   );
+                    // },
+
+                    // Bottom Sheet
+                    onPressed: () {
+                      Get.bottomSheet(
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(24),
                             ),
-                          ],
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade400,
+                                  borderRadius:
+                                      BorderRadius.circular(10),
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
+
+                              const CircleAvatar(
+                                radius: 32,
+                                child: Icon(
+                                  Icons.open_in_new,
+                                  size: 32,
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
+
+                              Text(
+                                'apply_job'.tr,
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+                              
+                              Text(
+                                job.employerName,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              Text(
+                                job.jobTitle,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              Text(
+                                'you_are_about_to_open_the_company_application_page'.tr,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color
+                                      ?.withOpacity(0.7),
+                                ),
+                              ),
+
+                              const SizedBox(height: 24),
+
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: Text(
+                                        'cancel'.tr,
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 12),
+
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        Get.back();
+
+                                        await controller
+                                            .applyJob(
+                                          job.applyLink,
+                                        );
+                                      },
+                                      child: Text(
+                                        'continue'.tr,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 12),
+                            ],
+                          ),
                         ),
+                        isScrollControlled: true,
                       );
                     },
+                    
                     // onPressed: () => controller.applyJob(job.applyLink),
                     icon: const Icon(Icons.open_in_new),
-                    label: const Text(
-                      'Apply Now',
+                    label: Text(
+                      'apply_now'.tr,
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),
