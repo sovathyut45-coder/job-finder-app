@@ -261,6 +261,28 @@ class SearchView extends GetView<SearchJobController> {
                   );
                 }
 
+                
+
+                if (controller.filteredSuggestions.isNotEmpty) {
+                  return ListView.builder(
+                    //shrinkWrap: true,
+                    //physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.filteredSuggestions.length,
+                    itemBuilder: (context, index) {
+                      final suggestion = controller.filteredSuggestions[index];
+                      return ListTile(
+                        leading: const Icon(Icons.search),
+                        title: Text(suggestion),
+                        onTap: () {
+                          controller.searchController.text = suggestion;
+                          controller.filteredSuggestions.clear();
+                          controller.onSearchChanged(suggestion);
+                        },
+                      );
+                    },
+                  );
+                }
+
                 if(controller.currentQuery.isEmpty){
                   return _buildSearchHistory();
                 }

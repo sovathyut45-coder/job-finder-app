@@ -530,10 +530,10 @@
 // ========================================= version 3 ======================================================
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
+import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 import 'package:job_finder_app/modules/job_detail/controller/job_detail_controller.dart';
 import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 import 'package:share_plus/share_plus.dart';
@@ -546,6 +546,7 @@ class JobDetailView extends GetView<JobDetailController> {
     final savedController = Get.find<SavedJobsController>();
     final theme = Get.find<ThemeController>();
     final isDark = theme.isDark.value;
+    final appliedcontroller = Get.find<AppliedJobsController>();
 
     // Get theme-aware colors
     final primaryColor = Theme.of(context).primaryColor;
@@ -1005,11 +1006,11 @@ class JobDetailView extends GetView<JobDetailController> {
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         Get.back();
-
-                                        await controller
+                                        await appliedcontroller
                                             .applyJob(
-                                          job.applyLink,
+                                          job,
                                         );
+                                        appliedcontroller.addAppliedJob(job);
                                       },
                                       child: Text(
                                         'continue'.tr,

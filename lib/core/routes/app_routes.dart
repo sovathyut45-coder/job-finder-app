@@ -7,4 +7,5 @@ abstract class AppRoutes {
   static const dashboard = '/dashboard';
   static const search = '/search';
   static const setting = '/setting';
+  static const appliedJobs = '/applied-jobs';
 }

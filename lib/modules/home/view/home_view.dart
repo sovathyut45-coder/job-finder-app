@@ -292,7 +292,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
 import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
+import 'package:job_finder_app/core/widgets/stat_card.dart';
 import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
+import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../core/Theme/theme_controller.dart';
@@ -301,11 +303,13 @@ import '../controller/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
     final isDark = themeController.isDark.value;
     final recentController = Get.find<RecentJobsController>();
+    final statsController = Get.find<DashboardController>();
     
 
     // Get theme-aware colors
@@ -377,7 +381,69 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
+
+              const Text(
+                  'Your Activity',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight:
+                        FontWeight.bold,
+                  ),
+                ),
+
+              const SizedBox(height: 12),
+
+                Obx(
+                () => Row(
+                  children: [
+
+                    StatCard(
+                      icon: Icons.bookmark,
+                      title: 'Applied',
+                      value: statsController
+                          .appliedCount
+                          .value
+                          .toString(),
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    StatCard(
+                      icon: Icons.favorite,
+                      title: 'Saved',
+                      value: statsController
+                          .savedCount
+                          .value
+                          .toString(),
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    StatCard(
+                      icon: Icons.history,
+                      title: 'Recent',
+                      value: statsController
+                          .recentCount
+                          .value
+                          .toString(),
+                    ),
+
+                    //const SizedBox(width: 10),
+
+                    // StatCard(
+                    //   icon: Icons.search,
+                    //   title: 'Searches',
+                    //   value: statsController
+                    //       .searchCount
+                    //       .value
+                    //       .toString(),
+                    // ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
 
               Text(
                 'popular_positions'.tr,
@@ -418,6 +484,11 @@ class HomeView extends GetView<HomeController> {
                   return const SizedBox();
                 }
 
+                  // print(
+                  //   'UI rebuild: ${recentController.recentJobs.length}',
+                  // );
+
+
                 return Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
@@ -434,7 +505,7 @@ class HomeView extends GetView<HomeController> {
                     const SizedBox(height: 12),
 
                     ...recentController.recentJobs
-                        .take(5)
+                        .take(3)
                         .map((job) {
                       return Card(
                         margin:

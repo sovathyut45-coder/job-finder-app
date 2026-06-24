@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:job_finder_app/data/model/job_model.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';
+import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 
 class SearchJobController extends GetxController {
   final JobRepository repository;
@@ -29,6 +30,17 @@ class SearchJobController extends GetxController {
   bool hasMore = true;
 
   final selectedFilter = 'All'.obs;
+  final filteredSuggestions = <String>[].obs;
+  final suggestions = [
+    'Software Engineer',
+    'Flutter Developer',
+    'Mobile Developer',
+    'UI UX Designer',
+    'Data Analyst',
+    'Backend Developer',
+    'Frontend Developer',
+    'Project Manager',
+  ].obs;
 
   @override
   void onInit() {
@@ -39,6 +51,8 @@ class SearchJobController extends GetxController {
     currentQuery = Get.arguments ?? '';
 
     searchController.text = currentQuery;
+
+    loadCachedJobs(currentQuery);
 
     if (currentQuery.isNotEmpty) {
       fetchJobs();
@@ -90,16 +104,37 @@ class SearchJobController extends GetxController {
     jobs.assignAll(result);
 
     hasMore = result.length >= 20;
+    box.write(
+      'cached_jobs_${query.toLowerCase()}',
+      result.map((e) => e.toJson()).toList(),
+    );
       
     } catch (e) {
+      print('API ERROR: $e');
+      loadCachedJobs(currentQuery);
       Get.snackbar(
-        'Error',
-        e.toString(),
+        'Offline Mode',
+        'Showing cached jobs',
       );
     } finally {
       isLoading.value = false;
     }
   }
+
+  void loadCachedJobs(String query) {
+    print('LOAD CACHE');
+    try{
+      final data =
+        box.read('cached_jobs_${query.toLowerCase()}') ?? [];
+
+      jobs.value = List<Map<String, dynamic>>.from(data).map((e) => JobModel.fromJson(e)).toList();
+    }catch(e){
+      Get.snackbar(
+          'Error',
+          'No Cached Jobs',
+        );
+    }
+}
 
   Future<void> loadMoreJobs() async {
     //print('LOAD MORE PAGE: $currentPage');
@@ -133,30 +168,48 @@ class SearchJobController extends GetxController {
     }
   }
 
-  void onSearchChanged(String value) {
-    if (_debounce?.isActive ?? false) {
-      _debounce?.cancel();
-    }
-
-    _debounce = Timer(
-      const Duration(milliseconds: 800),
-      () {
-        final query = value.trim();
-
-        if (query.isEmpty) return;
-
-        if (query == currentQuery) return;
-
-        currentQuery = query;
-
-        currentPage = 1;
-        hasMore = true;
-
-        fetchJobs();
-      },
-    );
-    
+void onSearchChanged(String value) {
+  //print('Typing: $value');
+  if (_debounce?.isActive ?? false) {
+    _debounce?.cancel();
   }
+
+  // Suggestion Filter
+  if (value.isEmpty) {
+    filteredSuggestions.clear();
+  } else {
+    filteredSuggestions.value =
+        suggestions.where(
+          (item) => item
+              .toLowerCase()
+              .contains(
+                value.toLowerCase(),
+              ),
+        ).toList();
+  }
+
+  //  print(
+  //     'Suggestions: ${filteredSuggestions.length}',
+  //   );
+
+  _debounce = Timer(
+    const Duration(milliseconds: 800),
+    () {
+      final query = value.trim();
+
+      if (query.isEmpty) return;
+
+      if (query == currentQuery) return;
+
+      currentQuery = query;
+
+      currentPage = 1;
+      hasMore = true;
+
+      fetchJobs();
+    },
+  );
+}
 
   Future<void> searchJobs() async {
     final query = searchController.text.trim();
@@ -171,6 +224,13 @@ class SearchJobController extends GetxController {
     hasMore = true;
 
     await fetchJobs();
+    // load dashboard stats
+   Future.microtask(() {
+  if (Get.isRegistered<DashboardController>()) {
+    Get.find<DashboardController>()
+        .loadStats();
+  }
+});
   }
 
   Future<void> refreshJobs() async {
@@ -209,11 +269,24 @@ class SearchJobController extends GetxController {
       'search_history',
       searchHistory.toList(),
     );
+    Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadStats();
+      }
+    });
   }
 
   void clearSearchHistory() {
     searchHistory.clear();
 
     box.remove('search_history');
+     Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadStats();
+      }
+    });
   }
+
 }

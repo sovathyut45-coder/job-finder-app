@@ -5,17 +5,16 @@ class JobDatasource {
     required String query,
     int page = 1,
   }) async {
-
-    final response = await DioClient.dio.get(
+    
+    
+    try{
+      final response = await DioClient.dio.get(
       '/job-board-api',
       queryParameters: {
         'page': page,
       },
     );
-
     final List jobs = response.data['data'];
-    //print(response.data['data'][0]);
-
     final filteredJobs = jobs.where(
       (job) {
         return job['title']
@@ -60,25 +59,9 @@ class JobDatasource {
       },
     ).toList();
   }
-
-
-  // Future<List<dynamic>> getJobDetail(
-  //    String id,
-  // ) async {
-
-  //   try {
-  //     final response = await DioClient.dio.get(
-  //       '/job-board-api',
-  //       queryParameters: {
-  //         'job_id': id,
-  //       },
-  //     );
-  //     return response.data['data'];
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  //   return [];
-  // }
-
+  catch(e){
+   // print(e);
+    return [];
+  }
+    }
 }

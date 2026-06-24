@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
+import 'package:job_finder_app/modules/ApplyJob/view/applied_job_view.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
-import 'package:job_finder_app/modules/home/controller/home_controller.dart';
 import 'package:job_finder_app/modules/home/view/home_view.dart';
 import 'package:job_finder_app/modules/profile/view/profile_view.dart';
 import 'package:job_finder_app/modules/save_job/view/saved_jobs_view.dart';
@@ -16,11 +16,13 @@ class DashboardView extends GetView<DashboardController>{
     final pages = [
       HomeView(),
       SavedJobsView(),
+      AppliedJobView(),
       ProfileView(),
     ];
     final List<String> titles = [
       'home'.tr,
       'saved_jobs'.tr,
+      'Applied Jobs'.tr,
       'profile'.tr,
     ];
 
@@ -73,9 +75,14 @@ class DashboardView extends GetView<DashboardController>{
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'profile'.tr,
-            )
+              icon: Icon(Icons.bookmark),
+              label: 'Applied Jobs'.tr,
+            ),
+
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.person),
+            //   label: 'profile'.tr,
+            // )
           ],
         ),
       )
