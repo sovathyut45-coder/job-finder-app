@@ -54,7 +54,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.appliedJobs,
       page: () => AppliedJobView(),
-      binding: AppliedJobsBinding(),
-    )
+    ),
   ];
 }

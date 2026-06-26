@@ -23,7 +23,28 @@ class SavedJobsController extends GetxController{
   void saveJob(JobModel job){
     if(isSaved(job.jobId)) return;
 
-    savedJobs.add(job);
+    // final savedJob = JobModel(
+    //   jobId: job.jobId,
+    //   jobTitle: job.jobTitle,
+    //   jobCity: job.jobCity,
+    //   jobCountry: job.jobCountry,
+    //   employerName: job.employerName,
+    //   employerLogo: job.employerLogo,
+    //   jobLocation: job.jobLocation,
+    //   employmentType: job.employmentType,
+    //   description: job.description,
+    //   applyLink: job.applyLink,
+    //   minSalary: job.minSalary,
+    //   maxSalary: job.maxSalary,
+    //   savedDate: DateTime.now()
+    //       .toIso8601String(),
+    // );
+
+    // OPTION 2
+    final savedJob = job.copyWith(
+      savedDate: DateTime.now().toIso8601String(),
+    );
+    savedJobs.add(savedJob);
     box.write('save_jobs', savedJobs.map((job) => job.toJson()).toList());
     // load dashboard stats
      Future.microtask(() {

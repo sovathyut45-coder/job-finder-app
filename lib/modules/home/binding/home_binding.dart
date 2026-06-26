@@ -20,7 +20,6 @@ class HomeBinding extends Bindings{
     Get.lazyPut<HomeController>(
       () => HomeController(Get.find<JobRepository>()));
     
-    //RecentJobBinding().dependencies();
 
     
   }

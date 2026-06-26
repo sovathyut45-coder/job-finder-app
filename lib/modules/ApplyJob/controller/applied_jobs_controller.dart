@@ -10,8 +10,6 @@ class AppliedJobsController extends GetxController {
   RxList<JobModel> appliedJobs =
      <JobModel>[].obs;
 
-   //RxList<JobModel> saveAppliedJobs = RxList<JobModel>();
-
   @override
   void onInit() {
     super.onInit();
@@ -23,7 +21,29 @@ class AppliedJobsController extends GetxController {
       (e) => e.jobId == job.jobId,
     );
 
-    appliedJobs.insert(0, job);
+    //   final appliedJob = JobModel(
+    //   jobId: job.jobId,
+    //   jobTitle: job.jobTitle,
+    //   jobCity: job.jobCity,
+    //   jobCountry: job.jobCountry,
+    //   employerName: job.employerName,
+    //   employerLogo: job.employerLogo,
+    //   jobLocation: job.jobLocation,
+    //   employmentType: job.employmentType,
+    //   description: job.description,
+    //   applyLink: job.applyLink,
+    //   minSalary: job.minSalary,
+    //   maxSalary: job.maxSalary,
+    //   appliedDate: DateTime.now().toIso8601String(),
+    // );
+
+    // OPTION 2
+    final appliedJob = job.copyWith(
+      appliedDate: DateTime.now().toIso8601String(),
+      applicationStatus: 'Applied',
+    );
+
+    appliedJobs.insert(0,appliedJob);
 
 
       box.write(
@@ -39,7 +59,59 @@ class AppliedJobsController extends GetxController {
       }
   }
 
-    Future<void> applyJob(JobModel job) async {
+
+  void updateStatus(String jobId,String status) {
+      final index = appliedJobs.indexWhere(
+        (job) => job.jobId == jobId,
+      );
+
+      if (index == -1) return;
+
+      appliedJobs[index] =
+          appliedJobs[index].copyWith(
+            applicationStatus: status,
+          );
+
+      appliedJobs.refresh();
+
+      box.write(
+        'applied_jobs',
+        appliedJobs
+            .map((e) => e.toJson())
+            .toList(),
+      );
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadApplicationStats();
+      }
+    }
+
+
+  void updateNote(String jobId,String note) {
+    final index =
+        appliedJobs.indexWhere(
+      (job) => job.jobId == jobId,
+    );
+
+    if (index == -1) return;
+
+    appliedJobs[index] =
+        appliedJobs[index].copyWith(
+      notes: note,
+    );
+
+    appliedJobs.refresh();
+
+    box.write(
+      'applied_jobs',
+      appliedJobs
+          .map((e) => e.toJson())
+          .toList(),
+    );
+  }
+
+
+  Future<void> applyJob(JobModel job) async {
     if (job.applyLink.isEmpty) {
       Get.snackbar(
         'Error',

@@ -394,51 +394,57 @@ class HomeView extends GetView<HomeController> {
 
               const SizedBox(height: 12),
 
-                Obx(
-                () => Row(
-                  children: [
+              Obx(
+                () => GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.9,
 
+                  children: [
                     StatCard(
-                      icon: Icons.bookmark,
+                      icon: Icons.work,
                       title: 'Applied',
-                      value: statsController
-                          .appliedCount
-                          .value
-                          .toString(),
+                      value: statsController.appliedCount.value.toString(),
+                      color: Colors.blue,
                     ),
 
-                    const SizedBox(width: 10),
+                    StatCard(
+                      icon: Icons.schedule,
+                      title: 'Interview',
+                      value: statsController.interviewCount.value.toString(),
+                      color: Colors.orange,
+                    ),
+
+                    StatCard(
+                      icon: Icons.check_circle,
+                      title: 'Accepted',
+                      value: statsController.acceptedCount.value.toString(),
+                      color: Colors.green,
+                    ),
 
                     StatCard(
                       icon: Icons.favorite,
                       title: 'Saved',
-                      value: statsController
-                          .savedCount
-                          .value
-                          .toString(),
+                      value: statsController.savedCount.value.toString(),
+                      color: Colors.purple,
                     ),
-
-                    const SizedBox(width: 10),
 
                     StatCard(
-                      icon: Icons.history,
-                      title: 'Recent',
-                      value: statsController
-                          .recentCount
-                          .value
-                          .toString(),
+                      icon: Icons.remove_red_eye,
+                      title: 'Recent Viewed',
+                      value: statsController.recentCount.value.toString(),
+                      color: Colors.teal,
                     ),
 
-                    //const SizedBox(width: 10),
-
-                    // StatCard(
-                    //   icon: Icons.search,
-                    //   title: 'Searches',
-                    //   value: statsController
-                    //       .searchCount
-                    //       .value
-                    //       .toString(),
-                    // ),
+                    StatCard(
+                      icon: Icons.cancel,
+                      title: 'Rejected',
+                      value: statsController.rejectedCount.value.toString(),
+                      color: Colors.red,
+                    ),
                   ],
                 ),
               ),

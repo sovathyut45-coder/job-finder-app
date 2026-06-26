@@ -4,9 +4,6 @@ import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controll
 class AppliedJobsBinding extends Bindings{
   @override
   void dependencies() {
-    print(
-      'AppliedJobsBinding Run',
-    );
     Get.lazyPut<AppliedJobsController>(
       () => AppliedJobsController()
     );

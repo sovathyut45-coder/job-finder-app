@@ -1010,7 +1010,13 @@ class JobDetailView extends GetView<JobDetailController> {
                                             .applyJob(
                                           job,
                                         );
-                                        appliedcontroller.addAppliedJob(job);
+                                        print(
+                                            'Applied Registered = ${Get.isRegistered<AppliedJobsController>()}',
+                                          );
+                                        if(Get.isRegistered<AppliedJobsController>()){
+                                          Get.find<AppliedJobsController>()
+                                              .addAppliedJob(job);
+                                        }
                                       },
                                       child: Text(
                                         'continue'.tr,

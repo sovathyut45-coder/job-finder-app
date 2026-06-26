@@ -178,6 +178,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
@@ -207,6 +208,17 @@ class SavedJobsView extends GetView<SavedJobsController> {
       ),
     );
   }
+
+  String formatDate(String date) {
+  if (date.isEmpty) return '';
+
+  return DateFormat(
+    'dd MMM yyyy',
+    Get.locale!.languageCode,
+  ).format(
+    DateTime.parse(date),
+  );
+}
 
   Widget _buildEmptyState(Color primaryColor, Color textSecondary) {
     return Center(
@@ -282,15 +294,40 @@ class SavedJobsView extends GetView<SavedJobsController> {
                 color: textPrimary, 
               ),
             ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: Text(
-                job.employerName,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: textSecondary,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(
+                    job.employerName,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: textSecondary,
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(
+                    job.jobLocation,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: textSecondary,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(
+                    "Save Date: ${formatDate(job.savedDate)}",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: textSecondary,
+                    ),
+                  ),
+                ),
+              ],
             ),
             trailing: IconButton(
               onPressed: () => controller.removeJob(job.jobId),
