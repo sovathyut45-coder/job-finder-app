@@ -2,6 +2,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
+import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
+import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 
 class SettingController extends GetxController {
   final box = GetStorage();
@@ -13,6 +17,12 @@ class SettingController extends GetxController {
       'Success',
       'Search history cleared',
     );
+    Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadStats();
+      }
+    });
   }
 
   void clearRecentJobs() {
@@ -22,15 +32,52 @@ class SettingController extends GetxController {
       'Success',
       'Recent jobs cleared',
     );
+    Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadStats();
+      }
+      if(Get.isRegistered<RecentJobsController>()){
+        Get.find<RecentJobsController>().loadRecentJobs();
+        
+      }
+    });
   }
 
   void clearSavedJobs() {
-    box.remove('saved_jobs');
+    box.remove('save_jobs');
 
     Get.snackbar(
       'Success',
       'Saved jobs cleared',
     );
+    Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadStats();
+      }
+      if(Get.isRegistered<SavedJobsController>()){
+        Get.find<SavedJobsController>().loadSavedJobs();
+      }
+    });
+  }
+
+  void clearAppliedJobs() {
+    box.remove('applied_jobs');
+
+    Get.snackbar(
+      'Success',
+      'Applied jobs cleared',
+    );
+    Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+        Get.find<DashboardController>()
+            .loadStats();
+      }
+      if(Get.isRegistered<AppliedJobsController>()){
+        Get.find<AppliedJobsController>().loadAppliedJobs();
+      }
+    });
   }
 
   Future<void> showClearDialog({

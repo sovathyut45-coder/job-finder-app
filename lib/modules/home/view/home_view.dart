@@ -292,7 +292,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
 import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
+import 'package:job_finder_app/core/widgets/stat_card.dart';
 import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
+import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 
 import '../../../core/routes/app_routes.dart';
 import '../../../core/Theme/theme_controller.dart';
@@ -301,11 +303,13 @@ import '../controller/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
     final isDark = themeController.isDark.value;
     final recentController = Get.find<RecentJobsController>();
+    final statsController = Get.find<DashboardController>();
     
 
     // Get theme-aware colors
@@ -377,7 +381,75 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 24),
+
+              const Text(
+                  'Your Activity',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight:
+                        FontWeight.bold,
+                  ),
+                ),
+
+              const SizedBox(height: 12),
+
+              Obx(
+                () => GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.9,
+
+                  children: [
+                    StatCard(
+                      icon: Icons.work,
+                      title: 'Applied',
+                      value: statsController.appliedCount.value.toString(),
+                      color: Colors.blue,
+                    ),
+
+                    StatCard(
+                      icon: Icons.schedule,
+                      title: 'Interview',
+                      value: statsController.interviewCount.value.toString(),
+                      color: Colors.orange,
+                    ),
+
+                    StatCard(
+                      icon: Icons.check_circle,
+                      title: 'Accepted',
+                      value: statsController.acceptedCount.value.toString(),
+                      color: Colors.green,
+                    ),
+
+                    StatCard(
+                      icon: Icons.favorite,
+                      title: 'Saved',
+                      value: statsController.savedCount.value.toString(),
+                      color: Colors.purple,
+                    ),
+
+                    StatCard(
+                      icon: Icons.remove_red_eye,
+                      title: 'Recent Viewed',
+                      value: statsController.recentCount.value.toString(),
+                      color: Colors.teal,
+                    ),
+
+                    StatCard(
+                      icon: Icons.cancel,
+                      title: 'Rejected',
+                      value: statsController.rejectedCount.value.toString(),
+                      color: Colors.red,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
 
               Text(
                 'popular_positions'.tr,
@@ -418,6 +490,11 @@ class HomeView extends GetView<HomeController> {
                   return const SizedBox();
                 }
 
+                  // print(
+                  //   'UI rebuild: ${recentController.recentJobs.length}',
+                  // );
+
+
                 return Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
@@ -434,7 +511,7 @@ class HomeView extends GetView<HomeController> {
                     const SizedBox(height: 12),
 
                     ...recentController.recentJobs
-                        .take(5)
+                        .take(3)
                         .map((job) {
                       return Card(
                         margin:

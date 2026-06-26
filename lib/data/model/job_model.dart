@@ -16,6 +16,10 @@ class JobModel {
 
   final int minSalary;
   final int maxSalary;
+  final String savedDate;
+  final String appliedDate;
+  final String applicationStatus;
+  final String notes;
 
   JobModel({
     required this.jobId,
@@ -30,6 +34,10 @@ class JobModel {
     required this.applyLink,
     required this.minSalary,
     required this.maxSalary,
+    this.savedDate = '',
+    this.appliedDate = '',
+    this.applicationStatus = 'Applied',
+    this.notes = '',
   });
 
   factory JobModel.fromJson(
@@ -53,6 +61,11 @@ class JobModel {
            int.tryParse(json['job_min_salary'].toString()) ?? 0,
       maxSalary:
            int.tryParse(json['job_max_salary'].toString()) ?? 0,
+      savedDate: json['saved_date'] ?? '',
+      appliedDate: json['applied_date'] ?? '',
+      applicationStatus:
+        json['application_status'] ?? 'Applied',
+      notes: json['notes'] ?? '',
     );
   }
 
@@ -69,5 +82,53 @@ class JobModel {
         'job_apply_link': applyLink,
         'job_min_salary': minSalary,
         'job_max_salary': maxSalary,
+        'saved_date': savedDate,
+        'applied_date': appliedDate,
+        'application_status': applicationStatus,
+        'notes': notes
       };
+
+  JobModel copyWith({
+   String? jobId,
+   String? jobTitle,
+   String? employerName,
+   String? employerLogo,
+
+   String? jobLocation,
+   String? jobCity,
+   String? jobCountry,
+
+   String? employmentType,
+
+   String? description,
+
+   String? applyLink,
+
+   int? minSalary,
+   int? maxSalary,
+   String? savedDate,
+   String? appliedDate,
+   String? applicationStatus,
+   String? notes,
+  }) {
+    return JobModel(
+      jobId: jobId ?? this.jobId,
+      jobTitle: jobTitle ?? this.jobTitle,
+      employerName: employerName ?? this.employerName,
+      employerLogo: employerLogo ?? this.employerLogo,
+      jobLocation: jobLocation ?? this.jobLocation,
+      jobCity: jobCity ?? this.jobCity,
+      jobCountry: jobCountry ?? this.jobCountry,
+      employmentType: employmentType ?? this.employmentType,
+      description: description ?? this.description,
+      applyLink: applyLink ?? this.applyLink,
+      minSalary: minSalary ?? this.minSalary,
+      maxSalary: maxSalary ?? this.maxSalary,
+      savedDate: savedDate ?? this.savedDate,
+      appliedDate: appliedDate ?? this.appliedDate,
+      applicationStatus: applicationStatus ?? this.applicationStatus,
+      notes: notes ?? this.notes,
+
+    );
+  }
 }

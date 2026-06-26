@@ -8,6 +8,9 @@ class JobRepository {
     this.datasource,
   );
 
+  static const String cacheKey =
+    'cached_jobs';
+
 Future<List<JobModel>> getJobs({
   required String query,
   int page = 1,

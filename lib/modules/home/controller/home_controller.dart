@@ -24,6 +24,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fetchPopularJobs();
+    
   }
 
   Future<void> fetchPopularJobs() async {

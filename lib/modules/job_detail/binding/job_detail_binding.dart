@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:job_finder_app/data/datasource/job_datasource.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';
+import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 import 'package:job_finder_app/modules/job_detail/controller/job_detail_controller.dart';
 
 class JobDetailBinding extends Bindings{
@@ -18,6 +19,10 @@ class JobDetailBinding extends Bindings{
       () => JobDetailController(
         Get.find<JobRepository>()
       )
+    );
+
+    Get.lazyPut<AppliedJobsController>(
+      () => AppliedJobsController(),
     );
   }
 }
