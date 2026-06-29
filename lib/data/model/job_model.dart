@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class JobModel {
   final String jobId;
   final String jobTitle;
@@ -64,7 +66,7 @@ class JobModel {
       savedDate: json['saved_date'] ?? '',
       appliedDate: json['applied_date'] ?? '',
       applicationStatus:
-        json['application_status'] ?? 'Applied',
+        json['application_status'] ?? 'Applied'.tr,
       notes: json['notes'] ?? '',
     );
   }

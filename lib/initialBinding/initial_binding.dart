@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:job_finder_app/core/Service/auth_service.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
-import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
+import 'package:job_finder_app/modules/auth/binding/auth_binding.dart';
 import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 import 'package:job_finder_app/translations/language/controller/language_controller.dart';
 
@@ -19,9 +20,11 @@ class InitialBinding extends Bindings{
       LanguageController(),
       permanent: true,
     );
-    // Get.put(
-    //   AppliedJobsController(),
-    //   permanent: true
-    // );
+    Get.put(
+      AuthService(),
+      permanent: true
+    );
+
+    AuthBinding().dependencies();
   }
 }

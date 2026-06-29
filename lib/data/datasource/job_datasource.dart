@@ -8,7 +8,7 @@ class JobDatasource {
     
     
     try{
-      final response = await DioClient.dio.get(
+      final response = await DioClient.jobDio.get(
       '/job-board-api',
       queryParameters: {
         'page': page,

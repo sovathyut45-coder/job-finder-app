@@ -4,12 +4,17 @@ import 'package:job_finder_app/modules/ApplyJob/binding/applied_jobs_binding.dar
 import 'package:job_finder_app/modules/ApplyJob/view/applied_job_view.dart';
 import 'package:job_finder_app/modules/Sitting/binding/setting_binding.dart';
 import 'package:job_finder_app/modules/Sitting/view/setting_view.dart';
+import 'package:job_finder_app/modules/auth/binding/auth_binding.dart';
+import 'package:job_finder_app/modules/auth/view/login_view.dart';
+import 'package:job_finder_app/modules/auth/view/register_view.dart';
 import 'package:job_finder_app/modules/dashboard/binding/dashboard_binding.dart';
 import 'package:job_finder_app/modules/dashboard/view/dashboard_view.dart';
 import 'package:job_finder_app/modules/home/binding/home_binding.dart';
 import 'package:job_finder_app/modules/home/view/home_view.dart';
 import 'package:job_finder_app/modules/job_detail/binding/job_detail_binding.dart';
 import 'package:job_finder_app/modules/job_detail/view/job_detail_view.dart';
+import 'package:job_finder_app/modules/profile/binding/profile_binding.dart';
+import 'package:job_finder_app/modules/profile/view/profile_view.dart';
 import 'package:job_finder_app/modules/search/binding/search_binding.dart';
 import 'package:job_finder_app/modules/search/view/search_view.dart';
 import 'package:job_finder_app/modules/splash/binding/splash_binding.dart';
@@ -55,5 +60,24 @@ class AppPages {
       name: AppRoutes.appliedJobs,
       page: () => AppliedJobView(),
     ),
+
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const LoginView(),
+      binding: AuthBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.register,
+      page: () => const RegisterView(),
+      binding: AuthBinding(),
+    ),
+
+
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
+    )
   ];
 }

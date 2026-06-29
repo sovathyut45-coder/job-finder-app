@@ -26,9 +26,30 @@ class AppTranslation extends Translations {
               'Try another keyword',
           'search_jobs': 'Search Jobs',
           'search_jobs...': 'Search Jobs...',
+          'applied_jobs': 'Applied Jobs',
+          'no_applied_jobs': 'No Applied Jobs',
+          'you_have_no_applied_for_any_jobs_yet': 'You have no applied for any jobs yet',
+
+          // Apply
+          'status': 'Status',
+          'applied': 'Applied',
+          'interview': 'Interview',
+          'accepted': 'Accepted',
+          'rejected': 'Rejected',
+          'note': 'Note',
+          'add_note': 'Add Note',
+          'update_note': 'Update Note',
+          'update_status': 'Update Status',
+          'update_status_note': 'Update Status and Note',
+          'enter_note': 'Enter Note',
+          'enter_note...': 'Enter Note...',
+          'no_note': 'No Note',
+          'Applied On' : 'Applied on',
+          
 
 
           // save 
+          'save' : 'Save',
           'save_job': 'Save Job',
           'no_saved_jobs' : 'No Saved Jobs',
           'remove_job': 'Remove Job',
@@ -49,6 +70,7 @@ class AppTranslation extends Translations {
           'account': 'Account',
           'email': 'Email',
           'password': 'Password',
+          'your_activity': 'Your Activity',
           
 
           // home
@@ -123,9 +145,28 @@ class AppTranslation extends Translations {
               'សូមសាកល្បងពាក្យផ្សេង',
           'search_jobs': 'ស្វែងរកការងារ',
           'search_jobs...': 'ស្វែងរកការងារ...',
+          'applied_jobs' : 'ការងារដែលដាក់',
+          'no_applied_jobs' : 'គ្មានការងារដែលដាក់',
+          'you_have_no_applied_for_any_jobs_yet': 'អ្នកមិនដាក់ការងារណាមួយទេ',
+
+          // apply
+          'status': 'ស្ថានភាព',
+          'applied': 'បានដាក់ពាក្យ',
+          'interview': 'កំពុងសម្ភាសន៍',
+          'accepted': 'ជាប់',
+          'rejected': 'មិនជាប់',
+          'note': 'កំណត់ចំណាំ',
+          'add_note': 'បន្ថែមកំណត់ចំណាំ',
+          'update_note': 'កែប្រែកំណត់ចំណាំ',
+          'update_status': 'ធ្វើបច្ចុប្បន្នភាពស្ថានភាព',
+          'update_status_note': 'ធ្វើបច្ចុប្បន្នភាពស្ថានភាព និងកំណត់ចំណាំ',
+          'enter_note': 'សូមបញ្ចូលកំណត់ចំណាំ',
+          'enter_note...': 'សូមបញ្ចូលកំណត់ចំណាំ...',
+          'no_note': 'គ្មានកំណត់ចំណាំ',
+          'Applied On' : 'បានដាក់ពាក្យនៅ',
 
           // save 
-
+          'save' : 'រក្សាទុក',
           'save_jobs': 'រក្សាទុកការងារ',
           'no_saved_jobs' : 'គ្មានការងារ​ រក្សាទុក',
           'remove_job': 'លុបការងារ',
@@ -146,6 +187,7 @@ class AppTranslation extends Translations {
           'account': 'គណនី',
           'email': 'អ៊ីមែល',
           'password': 'ពាក្យសម្ងាត់',
+          'your_activity': 'សកម្មភាពរបស់អ្នក',
 
           // home 
 

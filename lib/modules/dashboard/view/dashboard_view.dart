@@ -22,7 +22,7 @@ class DashboardView extends GetView<DashboardController>{
     final List<String> titles = [
       'home'.tr,
       'saved_jobs'.tr,
-      'Applied Jobs'.tr,
+      'applied_jobs'.tr,
       'profile'.tr,
     ];
 
@@ -64,6 +64,7 @@ class DashboardView extends GetView<DashboardController>{
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: controller.currentIndex.value,
           onTap: controller.changeIndex,
+          type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -76,13 +77,13 @@ class DashboardView extends GetView<DashboardController>{
 
             BottomNavigationBarItem(
               icon: Icon(Icons.bookmark),
-              label: 'Applied Jobs'.tr,
+              label: 'applied_jobs'.tr,
             ),
 
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.person),
-            //   label: 'profile'.tr,
-            // )
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'profile'.tr,
+            )
           ],
         ),
       )

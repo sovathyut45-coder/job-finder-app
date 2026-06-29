@@ -290,10 +290,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:job_finder_app/core/Service/auth_service.dart';
 import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
 import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
 import 'package:job_finder_app/core/widgets/stat_card.dart';
 import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
+import 'package:job_finder_app/modules/auth/controller/auth_controller.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 
 import '../../../core/routes/app_routes.dart';
@@ -310,6 +312,7 @@ class HomeView extends GetView<HomeController> {
     final isDark = themeController.isDark.value;
     final recentController = Get.find<RecentJobsController>();
     final statsController = Get.find<DashboardController>();
+    final authController = Get.find<AuthController>();
     
 
     // Get theme-aware colors
@@ -383,8 +386,8 @@ class HomeView extends GetView<HomeController> {
 
               const SizedBox(height: 24),
 
-              const Text(
-                  'Your Activity',
+              Text(
+                  'your_activity'.tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight:
@@ -393,6 +396,17 @@ class HomeView extends GetView<HomeController> {
                 ),
 
               const SizedBox(height: 12),
+              
+              Obx(() {
+                  print(
+                    'HOME USER = ${authController.user.value?.name}',
+                  );
+
+                  return Text(
+                    authController.user.value?.name ?? '',
+
+                  );
+                }),
 
               Obx(
                 () => GridView.count(
