@@ -50,7 +50,7 @@ class SettingView extends GetView<SettingController>{
                           20,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: theme.isDark.value ? const Color(0xFF1E293B) : Colors.white,
                           borderRadius:
                               BorderRadius.circular(
                             20,
@@ -75,6 +75,7 @@ class SettingView extends GetView<SettingController>{
                             ),
 
                             ListTile(
+
                               title: Text(
                                 'khmer'.tr,
                               ),
