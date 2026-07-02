@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:job_finder_app/modules/profile/controller/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -8,129 +7,223 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+  controller.authController.user.value?.avatar,
+);
+
     return Scaffold(
-      //backgroundColor: Colors.grey[50],
       body: Obx(
         () {
-          final user = controller.authController.user.value;
+
+          final user =
+              controller
+                  .authController
+                  .user
+                  .value;
 
           if (user == null) {
             return const Center(
-              child: CircularProgressIndicator(color: Colors.blueAccent),
+              child:
+                  CircularProgressIndicator(),
             );
           }
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Profile Avatar with Border
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.blueAccent, width: 3),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
+            child: Padding(
+              padding:
+                  const EdgeInsets.all(20),
+
+              child: Column(
+                children: [
+
+                  const SizedBox(
+                    height: 20,
                   ),
-                  child: const CircleAvatar(
-                    radius: 55,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 60,
-                      color: Colors.blueAccent,
+                  
+
+                  GestureDetector(
+                    onTap: controller
+                        .authController
+                        .uploadAvatar,
+
+                    child: Obx(
+                      () {
+
+                        final user =
+                            controller
+                                .authController
+                                .user
+                                .value;
+
+                        return CircleAvatar(
+                          radius: 55,
+
+                          backgroundImage:
+                              user?.avatar.isNotEmpty == true
+                                  ? NetworkImage(
+                                     user!.avatar,
+                                    )
+                                  : null,
+
+                          child:
+                              user?.avatar.isEmpty ?? true
+                                  ? const Icon(
+                                      Icons.person,
+                                      size: 55,
+                                    )
+                                  : null,
+                        );
+                      },
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 24),
-
-                // Full Name
-                Text(
-                  user.name,
-                  style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    //color: Colors.black87,
+                  const SizedBox(
+                    height: 20,
                   ),
-                  textAlign: TextAlign.center,
-                ),
 
-                const SizedBox(height: 8),
-
-                // Email
-                Text(
-                  user.email,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
+                  Text(
+                    user.name,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight:
+                          FontWeight.bold,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
 
-                const SizedBox(height: 32),
+                  const SizedBox(
+                    height: 8,
+                  ),
 
-                // Info Card Section
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                
+                  Text(
+                    user.email,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      _buildInfoRow(Icons.phone, 'Phone', "" ?? 'Not provided'),
-                      const Divider(height: 24),
-                      _buildInfoRow(Icons.location_on, 'Location',"" ?? 'Not provided'),
-                      const Divider(height: 24),
-                      _buildInfoRow(Icons.work, 'Role', "" ?? 'Job Seeker'),
-                    ],
+
+                  const SizedBox(
+                    height: 30,
                   ),
-                ),
-              ],
+
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.person_outline,
+                      ),
+                      title: const Text(
+                        'Edit Profile',
+                      ),
+                      trailing:
+                          const Icon(
+                        Icons
+                            .arrow_forward_ios,
+                        size: 18,
+                      ),
+                      onTap: () {
+                        controller.openEditProfile();
+                      },
+                    ),
+                  ),
+
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.lock_outline,
+                      ),
+                      title: const Text(
+                        'Change Password',
+                      ),
+                      trailing:
+                          const Icon(
+                        Icons
+                            .arrow_forward_ios,
+                        size: 18,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.logout),
+                      title: const Text('Logout'),
+                      onTap: () {
+                        showDialog(
+                          context: context, 
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Logout'),
+                              content: const Text('Are you sure you want to log out?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(), 
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.green,
+                                  ),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    controller.logout(); 
+                                  },
+
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                  ),
+                                  child: const Text('Yes, Logout'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+
+                  // GetX use
+
+                  // Card(
+                  //   child: ListTile(
+                  //     leading: const Icon(
+                  //       Icons.logout,
+                  //     ),
+                  //     title: const Text(
+                  //       'Logout',
+                  //     ),
+                  //     onTap: () {
+                  //       Get.defaultDialog(
+                  //         title: 'Logout',
+                  //         titleStyle: const TextStyle(
+                  //           fontSize: 20,
+                  //           fontWeight: FontWeight.bold,
+                  //           color: Colors.redAccent,
+                  //         ),
+                  //         middleText: 'Are you sure you want to log out?',
+                  //         middleTextStyle: const TextStyle(fontSize: 16, color: Colors.black87),
+                  //         backgroundColor: Colors.white, // ពណ៌ផ្ទៃខាងក្នុង
+                  //         radius: 12, // មុំកែងមូល
+                  //         barrierDismissible: false, // បិទមិនឱ្យចុចក្រៅដើម្បីបិទ
+                  //         textConfirm: 'Yes, Logout',
+                  //         confirmTextColor: Colors.white,
+                  //         buttonColor: Colors.redAccent, // ពណ៌ផ្ទៃប៊ូតុង
+                  //         textCancel: 'Cancel',
+                  //         cancelTextColor: Colors.grey[700],
+                  //         onConfirm: () {
+                  //           Get.back();
+                  //           controller.logout();
+                  //         },
+                  //         onCancel: () => Get.back(),
+                  //       );
+                        
+                  //     },
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
           );
         },
       ),
-    );
-  }
-
-  Widget _buildInfoRow(IconData icon, String title, String value) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.blueAccent,),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

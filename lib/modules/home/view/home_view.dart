@@ -396,18 +396,6 @@ class HomeView extends GetView<HomeController> {
                 ),
 
               const SizedBox(height: 12),
-              
-              Obx(() {
-                  print(
-                    'HOME USER = ${authController.user.value?.name}',
-                  );
-
-                  return Text(
-                    authController.user.value?.name ?? '',
-
-                  );
-                }),
-
               Obx(
                 () => GridView.count(
                   shrinkWrap: true,

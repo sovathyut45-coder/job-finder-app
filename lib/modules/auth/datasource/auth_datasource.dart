@@ -1,16 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:job_finder_app/core/network/dio_client.dart';
+import 'package:path/path.dart';
 
 class AuthDatasource {
-
-  // final Dio dio = Dio(
-  //   BaseOptions(
-  //     baseUrl: 'http://127.0.0.1:8000/api',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //     },
-  //   ),
-  // );
 
   Future<Response> register({
     required String name,
@@ -40,6 +33,20 @@ class AuthDatasource {
     );
   }
 
+  Future<Response> logout(
+    {required String token}
+  )async{
+    return await DioClient.authDio.post(
+      '/logout',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        }
+      )
+    );
+    
+  }
+
   Future<Response> profile(
     String token
   ) async{
@@ -48,6 +55,78 @@ class AuthDatasource {
       options: Options(
         headers: {
           'Authorization': 'Bearer $token',
+        },
+      ),
+    );
+  }
+
+  Future<Response> updateProfile({
+    required String token,
+    required String name,
+    required String email,
+  }) {
+
+    return DioClient.authDio.put(
+      '/profile',
+      data: {
+        'name': name,
+        'email': email,
+      },
+      options: Options(
+        headers: {
+          'Authorization':
+              'Bearer $token',
+        },
+      ),
+    );
+  }
+
+  // Mobile only support
+
+  // Future<Response> uploadAvatar({
+  //   required String token,
+  //   required String imagePath,
+  // }) async {
+  //   return DioClient.authDio.post(
+  //     '/profile/avatar',
+  //     data: FormData.fromMap({
+  //       'avatar': await MultipartFile.fromFile(
+  //         imagePath,
+  //         filename: basename(imagePath),
+  //       ),
+  //     }),
+  //     options: Options(
+  //       headers: {
+  //         'Authorization':
+  //             'Bearer $token',
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // MOBILE and WEB Support
+
+  Future<Response> uploadAvatar({
+    required String token,
+    required XFile file,
+  }) async {
+
+    final bytes =
+        await file.readAsBytes();
+
+    return DioClient.authDio.post(
+      '/profile/avatar',
+      data: FormData.fromMap({
+        'avatar':
+            MultipartFile.fromBytes(
+          bytes,
+          filename: file.name,
+        ),
+      }),
+      options: Options(
+        headers: {
+          'Authorization':
+              'Bearer $token',
         },
       ),
     );

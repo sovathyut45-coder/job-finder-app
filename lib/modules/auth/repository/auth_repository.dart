@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 import '../datasource/auth_datasource.dart';
 
 class AuthRepository {
@@ -28,7 +30,43 @@ class AuthRepository {
     );
   }
 
+  Future logout(String token) {
+    return datasource.logout(token: token);
+  }
+
   Future profile(String token) {
     return datasource.profile(token);
+  }
+
+  Future updateProfile({
+    required String token,
+    required String name,
+    required String email,
+  }) {
+    return datasource.updateProfile(
+      token: token,
+      name: name,
+      email: email,
+    );
+  }
+
+  // Future uploadAvatar({
+  //   required String token,
+  //   required String imagePath,
+  // }) {
+  //   return datasource.uploadAvatar(
+  //     token: token,
+  //     imagePath: imagePath,
+  //   );
+  // }
+
+  Future uploadAvatar({
+    required String token,
+    required XFile file,
+  }) {
+    return datasource.uploadAvatar(
+      token: token,
+      file: file,
+    );
   }
 }

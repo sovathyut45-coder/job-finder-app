@@ -14,6 +14,7 @@ import 'package:job_finder_app/modules/home/view/home_view.dart';
 import 'package:job_finder_app/modules/job_detail/binding/job_detail_binding.dart';
 import 'package:job_finder_app/modules/job_detail/view/job_detail_view.dart';
 import 'package:job_finder_app/modules/profile/binding/profile_binding.dart';
+import 'package:job_finder_app/modules/profile/view/edit_profile.dart';
 import 'package:job_finder_app/modules/profile/view/profile_view.dart';
 import 'package:job_finder_app/modules/search/binding/search_binding.dart';
 import 'package:job_finder_app/modules/search/view/search_view.dart';
@@ -78,6 +79,12 @@ class AppPages {
       name: AppRoutes.profile,
       page: () => ProfileView(),
       binding: ProfileBinding(),
-    )
+    ),
+
+    GetPage(
+      name: AppRoutes.editProfile,
+      page: () =>
+          const EditProfileView(),
+    ),
   ];
 }
