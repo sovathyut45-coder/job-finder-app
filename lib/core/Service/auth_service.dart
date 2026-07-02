@@ -19,7 +19,7 @@ class AuthService {
     );
   }
 
-  void logout() {
+  void clearToken() {
     box.remove('token');
   }
   

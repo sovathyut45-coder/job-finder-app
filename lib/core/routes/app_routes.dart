@@ -10,4 +10,5 @@ abstract class AppRoutes {
   static const appliedJobs = '/applied-jobs';
   static const login = '/login';
   static const register = '/register';
+  static const editProfile = '/edit-profile';
 }
