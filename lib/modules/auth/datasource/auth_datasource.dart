@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:job_finder_app/core/network/dio_client.dart';
-import 'package:path/path.dart';
 
 class AuthDatasource {
 

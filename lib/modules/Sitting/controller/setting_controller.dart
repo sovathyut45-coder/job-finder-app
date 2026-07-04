@@ -57,7 +57,7 @@ class SettingController extends GetxController {
             .loadStats();
       }
       if(Get.isRegistered<SavedJobsController>()){
-        Get.find<SavedJobsController>().loadSavedJobs();
+        Get.find<SavedJobsController>().getSavedJobs();
       }
     });
   }

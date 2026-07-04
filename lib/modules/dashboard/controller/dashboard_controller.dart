@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 
 class DashboardController extends GetxController{
   final currentIndex = 0.obs;
   final box = GetStorage();
+  final savecontroller = Get.find<SavedJobsController>();
 
   final savedCount = 0.obs;
   final recentCount = 0.obs;
@@ -25,7 +27,7 @@ class DashboardController extends GetxController{
   }
 
   void loadStats(){
-    savedCount.value = (box.read('save_jobs') ?? []).length;
+    savedCount.value = savecontroller.savedJobs.length;
     recentCount.value = (box.read('recent_jobs') ?? []).length;
     searchCount.value = (box.read('search_history') ?? []).length;
     appliedCount.value = (box.read('applied_jobs') ?? []).length;

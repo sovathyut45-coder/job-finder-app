@@ -103,13 +103,6 @@ class AppliedJobView extends GetView<AppliedJobsController> {
             ],
           ),
           child: ListTile(
-            onTap: () {
-              Get.toNamed(
-                AppRoutes.jobDetails,
-                arguments: job,
-              );
-            },
-
               onLongPress: () {
                 Get.bottomSheet(
                   Container(
