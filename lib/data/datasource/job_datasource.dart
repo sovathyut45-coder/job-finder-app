@@ -125,5 +125,103 @@ class JobDatasource {
         rethrow;
       }
     }
+
+    Future<Response> applyJob({
+      required String token,
+      required Map<String, dynamic> data,
+    })async{
+      try{
+        return await DioClient.authDio.post(
+        '/applied-jobs',
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      }on DioException catch(e){
+        rethrow;
+      }
+    }
+
+    Future<Response> getAppliedJobs({
+      required String token,
+    })async{
+      try{
+        return await DioClient.authDio.get(
+        '/applied-jobs',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      }on DioException catch(e){
+        rethrow;
+      }
+    }
+
+    Future<Response> deleteAppliedJob({
+      required String token,
+      required String id, 
+      }) async {
+        try {
+          return await DioClient.authDio.delete(
+            '/applied-jobs/$id',
+            options: Options(
+              headers: {
+                'Authorization': 'Bearer $token',
+                'Accept': 'application/json',
+              },
+            ),
+          );
+        } on DioException catch (e) {
+          rethrow;
+        }
+      }
+      Future<Response> updateStatus({
+        required String token,
+        required Map<String, dynamic> data,
+        required int id,
+      })async{
+        try{
+          return await DioClient.authDio.patch(
+          '/applied-jobs/$id/status',
+          data: data,
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+        }on DioException catch(e){
+          rethrow;
+        }
+      }
+
+      Future<Response> updateNote({
+        required String token,
+        required Map<String,dynamic> data,
+        required int id,
+      })async{
+        try{
+          return await DioClient.authDio.patch(
+          '/applied-jobs/$id/notes',
+          data: data,
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+        }on DioException catch(e){
+          rethrow;
+        }
+      }
   
 }

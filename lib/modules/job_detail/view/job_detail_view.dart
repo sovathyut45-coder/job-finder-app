@@ -1018,7 +1018,7 @@ class JobDetailView extends GetView<JobDetailController> {
                                           );
                                         if(Get.isRegistered<AppliedJobsController>()){
                                           Get.find<AppliedJobsController>()
-                                              .addAppliedJob(job);
+                                              .appliedJob(job);
                                         }
                                       },
                                       child: Text(

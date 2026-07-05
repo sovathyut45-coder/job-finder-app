@@ -56,5 +56,57 @@ Future<List<JobModel>> getJobs({
     );
   }
 
+  Future<Response> applyJob({
+    required String token,
+    required Map<String, dynamic> data,
+  }) {
+    return datasource.applyJob(
+      token: token,
+      data: data,
+    );
+  }
+
+  Future<Response> getAppliedJobs({
+    required String token,
+  }) {
+    return datasource.getAppliedJobs(
+      token: token,
+    );
+  }
+
+  Future<Response> deleteAppliedJob({
+    required String token,
+    required String id,
+  }){
+    return datasource.deleteAppliedJob(
+      token: token,
+      id: id,
+    );
+  }
+
+  Future<Response> updateNote({
+    required String token,
+    required Map<String,dynamic> data,
+    required int id,
+  }){
+    return datasource.updateNote(
+      token: token,
+      data: data,
+      id: id,
+    );
+  }
+
+  Future<Response> updateStatus({
+    required String token,
+    required Map<String, dynamic> data,
+    required int id,
+  }){
+    return datasource.updateStatus(
+      token: token,
+      data: data,
+      id: id,
+    );
+  }
+
 
 }

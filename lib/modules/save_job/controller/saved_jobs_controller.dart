@@ -23,14 +23,13 @@ class SavedJobsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print("TOKEN = ${authService.token}");
     getSavedJobs();
   }
 
   Future<void> toggleSavedJob(JobModel job) async {
     try {
       isLoading.value = true;
-
-      // ពិនិត្យថាមានថូខឹនឬអត់
       if (authService.token == null || authService.token!.isEmpty) {
         throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
       }
@@ -42,7 +41,6 @@ class SavedJobsController extends GetxController {
           'title': job.jobTitle,
           'company': job.employerName,
           'location': job.jobLocation,
-          //'job_type': job.employmentType ,
           'logo': job.employerLogo,
           'url': job.applyLink,
         },
@@ -63,12 +61,13 @@ class SavedJobsController extends GetxController {
     }
   }
 
+
   Future<void> getSavedJobs() async {
     try {
       isLoading.value = true;
 
       if (authService.token == null || authService.token!.isEmpty) {
-        savedJobs.clear();
+        //savedJobs.clear();
         throw 'សូមចូលប្រើប្រាស់ដើម្បីមើលការងារដែលបានរក្សាទុក';
       }
 

@@ -30,9 +30,10 @@ class DashboardBinding extends Bindings {
     RecentJobBinding().dependencies();
 
     Get.lazyPut<AppliedJobsController>(
-      () => AppliedJobsController(),
+      () => AppliedJobsController(Get.find<JobRepository>()),
       fenix: true
     );
+
     ProfileBinding().dependencies();
   }
 }
