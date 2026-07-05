@@ -1,113 +1,103 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:job_finder_app/core/Service/auth_service.dart';
+import 'package:job_finder_app/data/model/applied_job_model.dart';
 import 'package:job_finder_app/data/model/job_model.dart';
+import 'package:job_finder_app/data/repository/job_repository.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppliedJobsController extends GetxController {
   final box = GetStorage();
+  final JobRepository repository;
+  AppliedJobsController(this.repository);
 
-  RxList<JobModel> appliedJobs =
-     <JobModel>[].obs;
+  RxList<AppliedJobModel> appliedJobs = <AppliedJobModel>[].obs;
+  RxBool isLoading = false.obs;
+  RxString errorMessage = ''.obs;
+  final AuthService authService = Get.find<AuthService>();
+
 
   @override
   void onInit() {
     super.onInit();
-    loadAppliedJobs();
+    getAppliedJob();
+    
   }
 
-  void addAppliedJob(JobModel job) {
-    appliedJobs.removeWhere(
-      (e) => e.jobId == job.jobId,
-    );
+  Future<void> updateStatus(int id, String status) async {
+    try {
+      isLoading.value = true;
 
-    //   final appliedJob = JobModel(
-    //   jobId: job.jobId,
-    //   jobTitle: job.jobTitle,
-    //   jobCity: job.jobCity,
-    //   jobCountry: job.jobCountry,
-    //   employerName: job.employerName,
-    //   employerLogo: job.employerLogo,
-    //   jobLocation: job.jobLocation,
-    //   employmentType: job.employmentType,
-    //   description: job.description,
-    //   applyLink: job.applyLink,
-    //   minSalary: job.minSalary,
-    //   maxSalary: job.maxSalary,
-    //   appliedDate: DateTime.now().toIso8601String(),
-    // );
-
-    // OPTION 2
-    final appliedJob = job.copyWith(
-      appliedDate: DateTime.now().toIso8601String(),
-      applicationStatus: 'Applied',
-    );
-
-    appliedJobs.insert(0,appliedJob);
-
-
-      box.write(
-        'applied_jobs',
-        appliedJobs
-            .map((e) => e.toJson())
-            .toList(),
-      );
-
-    if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadStats();
+      if (authService.token == null || authService.token!.isEmpty) {
+        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
       }
-  }
 
-
-  void updateStatus(String jobId,String status) {
-      final index = appliedJobs.indexWhere(
-        (job) => job.jobId == jobId,
+      final response = await repository.updateStatus(
+        token: authService.token!,
+        data: {
+          'status': status,
+        },
+        id: id,
       );
 
-      if (index == -1) return;
-
-      appliedJobs[index] =
-          appliedJobs[index].copyWith(
-            applicationStatus: status,
-          );
-
-      appliedJobs.refresh();
-
-      box.write(
-        'applied_jobs',
-        appliedJobs
-            .map((e) => e.toJson())
-            .toList(),
-      );
-      if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadApplicationStats();
+      if (response.statusCode == 200) {
+        await getAppliedJob ();
+      } else {
+        throw 'មិនអាច Update Status បាន';
       }
+    } on DioException catch (e) {
+      Get.snackbar(
+        'Error',
+        e.response?.data['message'] ?? e.message ?? 'Unknown error',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
     }
+  }
 
+  Future<void> updateNote(int id, String note) async {
+    try {
+      isLoading.value = true;
 
-  void updateNote(String jobId,String note) {
-    final index =
-        appliedJobs.indexWhere(
-      (job) => job.jobId == jobId,
-    );
+      if (authService.token == null || authService.token!.isEmpty) {
+        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+      }
 
-    if (index == -1) return;
+      final response = await repository.updateNote(
+        token: authService.token!,
+        data: {'notes': note},
+        id: id,
+      );
 
-    appliedJobs[index] =
-        appliedJobs[index].copyWith(
-      notes: note,
-    );
-
-    appliedJobs.refresh();
-
-    box.write(
-      'applied_jobs',
-      appliedJobs
-          .map((e) => e.toJson())
-          .toList(),
-    );
+      if (response.statusCode == 200) {
+        await getAppliedJob();
+      } else {
+        throw 'មិនអាច Update Note បាន';
+      }
+    }on DioException catch(e){
+      Get.snackbar(
+        'Error',
+        e.response?.data['message'] ?? e.message ?? 'Unknown error',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
 
@@ -137,38 +127,109 @@ class AppliedJobsController extends GetxController {
     }
   }
 
-  void loadAppliedJobs() {
-    final data = box.read('applied_jobs') ?? [];
-    if(data != null){
-      appliedJobs.value = List<Map<String, dynamic>>.from(data).map((job) => JobModel.fromJson(job)).toList(); // Convert to List<JobModel>>
+  Future<void> appliedJob(JobModel job) async {
+    try{
+      isLoading.value = true;
+      if(authService.token == null || authService.token!.isEmpty){
+        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+      }
+      final response = await repository.applyJob(
+        token: authService.token!,
+        data: {
+          'job_id': job.jobId,
+          'title': job.jobTitle,
+          'company': job.employerName,
+          'location': job.jobLocation,
+          'logo': job.employerLogo,
+          'url': job.applyLink,
+          'notes': job.notes,
+        },
+      );
+
+      if(response.statusCode == 200 || response.statusCode == 201){
+        await getAppliedJob();
+        Future.microtask(() {
+      if (Get.isRegistered<DashboardController>()) {
+          Get.find<DashboardController>()
+              .loadStats();
+        }
+      });
+      
+      }else{
+        throw 'មិនអាចរក្សាទុកបាន (កូដ: ${response.statusCode})';
+      }
+    }on DioException catch (e) {
+      print(e);
+    } catch (e) {
+      Get.snackbar('កំហុស', e.toString(), snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading.value = false;
+    }
+  
+  }
+
+  Future<void> getAppliedJob()async{
+    try{
+      isLoading.value = true;
+      if(authService.token == null || authService.token!.isEmpty){
+        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+      }
+      final response = await repository.getAppliedJobs(
+        token: authService.token!,
+      );
+
+      if(response.statusCode == 200 || response.statusCode == 201){
+        final List job = response.data['applied_jobs'] ?? [];
+        appliedJobs.assignAll(
+          job.map((e) => AppliedJobModel.fromJson(e)).toList(),
+        );
+        if (Get.isRegistered<DashboardController>()) {
+          Get.find<DashboardController>().loadStats();
+          Get.find<DashboardController>().loadApplicationStats();
+        }
+      }else{
+        throw 'មិនអាចរក្សាទុកបាន (កូដ: ${response.statusCode})';
+      }
+    } on DioException catch (e) {
+      print(e);
+    } catch (e) {
+      Get.snackbar('កំហុស', e.toString(), snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  void removeAppliedJob(
-    String jobId,
-  ) {
-    appliedJobs.removeWhere((job) => job.jobId == jobId);
-    box.write('applied_jobs', appliedJobs.map((job) => job.toJson()).toList());
-    Future.microtask(() {
-      if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadStats();
+  Future<void> removeAppliedJob(AppliedJobModel job)async{
+    try{
+      isLoading.value = true;
+      if(authService.token == null || authService.token!.isEmpty){
+        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
       }
-    });
-  }
+      final response = await repository.deleteAppliedJob(
+        token: authService.token!,
+        id: job.id.toString(),
+      );
 
-  void clearAppliedJobs() {
-    box.remove('applied_jobs');
-
-    Get.snackbar(
-      'Success',
-      'Applied jobs cleared',
-    );
-    Future.microtask(() {
-      if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadStats();
+      if(response.statusCode == 200 || response.statusCode == 204){
+        appliedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
+        if (Get.isRegistered<DashboardController>()) {
+          Get.find<DashboardController>().loadStats();
+          Get.find<DashboardController>().loadApplicationStats();
+        }
+        Get.snackbar(
+          'បានលុបបាន',
+          'ការរក្សាទុកបានលុបដោយជោគជ័យ',
+          snackPosition: SnackPosition.TOP,
+        );
+      }else{
+        throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';
       }
-    });
+    } on DioException catch (e) {
+      print(e);
+    } catch (e) {
+      Get.snackbar('កំហុស', e.toString(), snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

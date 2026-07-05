@@ -5,7 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:job_finder_app/core/Service/auth_service.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/data/model/user_model.dart';
+import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 import 'package:job_finder_app/modules/auth/repository/auth_repository.dart';
+import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 
 class AuthController extends GetxController {
 
@@ -101,7 +103,28 @@ class AuthController extends GetxController {
           response.data['token'];
       Get.find<AuthService>().saveToken(token);
 
-      await getProfile();
+      // await getProfile();
+
+      // if (Get.isRegistered<SavedJobsController>()) {
+      //   await Get.find<SavedJobsController>().getSavedJobs();
+      // }
+
+      // if (Get.isRegistered<AppliedJobsController>()) {
+      //   await Get.find<AppliedJobsController>().getAppliedJob();
+      // }
+
+      // option 2
+      // load Qickly data after login
+      await Future.wait([
+        getProfile(),
+
+        if (Get.isRegistered<SavedJobsController>())
+          Get.find<SavedJobsController>().getSavedJobs(),
+
+        if (Get.isRegistered<AppliedJobsController>())
+          Get.find<AppliedJobsController>().getAppliedJob(),
+      ]);
+
 
       Get.offAllNamed(
         AppRoutes.dashboard,
@@ -116,6 +139,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   Future<void> logout() async {
     try {

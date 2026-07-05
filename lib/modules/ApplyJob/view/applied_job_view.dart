@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
+import 'package:job_finder_app/data/model/applied_job_model.dart';
 import 'package:job_finder_app/data/model/job_model.dart';
 import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 
@@ -103,13 +104,6 @@ class AppliedJobView extends GetView<AppliedJobsController> {
             ],
           ),
           child: ListTile(
-            onTap: () {
-              Get.toNamed(
-                AppRoutes.jobDetails,
-                arguments: job,
-              );
-            },
-
               onLongPress: () {
                 Get.bottomSheet(
                   Container(
@@ -126,22 +120,22 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                     ),
                     child: Wrap(
                       children: [
-                        ListTile(
-                          title: Text('applied'.tr),
-                          onTap: () {
-                            controller.updateStatus(
-                              job.jobId,
-                              'applied'.tr,
-                            );
-                            Get.back();
-                          },
-                        ),
+                        // ListTile(
+                        //   title: Text('applied'.tr),
+                        //   onTap: () {
+                        //     controller.updateStatus(
+                        //       job.id,
+                        //       'applied'.tr,
+                        //     );
+                        //     Get.back();
+                        //   },
+                        // ),
 
                         ListTile(
                           title: Text('interview'.tr),
                           onTap: () {
                             controller.updateStatus(
-                              job.jobId,
+                              job.id,
                               'interview'.tr,
                             );
                             Get.back();
@@ -152,7 +146,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                           title: Text('accepted'.tr),
                           onTap: () {
                             controller.updateStatus(
-                              job.jobId,
+                              job.id,
                               'accepted'.tr,
                             );
                             Get.back();
@@ -163,7 +157,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                           title: Text('rejected'.tr),
                           onTap: () {
                             controller.updateStatus(
-                              job.jobId,
+                              job.id,
                               'rejected'.tr,
                             );
                             Get.back();
@@ -178,7 +172,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
 
             //contentPadding: const EdgeInsets.all(16),
             title: Text(
-              job.jobTitle,
+              job.title,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -191,7 +185,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
                   child: Text(
-                    job.employerName,
+                    job.company,
                     style: TextStyle(
                       fontSize: 14,
                       color: textSecondary,
@@ -201,7 +195,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
-                    "Applied On: ${formatDate(job.appliedDate)}".tr,
+                    "Applied On: ${formatDate(job.createdAt.toString())}".tr,
                     style: TextStyle(
                       fontSize: 12,
                       color: textSecondary,
@@ -212,7 +206,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                   padding: const EdgeInsets.only(top: 4),
                   child: Chip(
                     label: Text(
-                      "Status: ${job.applicationStatus}",
+                      "Status: ${job.status}",
                       style: TextStyle(
                         fontSize: 12,
                         color: textSecondary,
@@ -269,22 +263,22 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                               ),
                               child: Wrap(
                                 children: [
-                                  ListTile(
-                                    title: Text('applied'.tr),
-                                    onTap: () {
-                                      controller.updateStatus(
-                                        job.jobId,
-                                        'applied'.tr,
-                                      );
-                                      Get.back();
-                                    },
-                                  ),
+                                  // ListTile(
+                                  //   title: Text('applied'.tr),
+                                  //   onTap: () {
+                                  //     controller.updateStatus(
+                                  //       job.id,
+                                  //       'applied'.tr,
+                                  //     );
+                                  //     Get.back();
+                                  //   },
+                                  // ),
 
                                   ListTile(
                                     title: Text('interview'.tr),
                                     onTap: () {
                                       controller.updateStatus(
-                                        job.jobId,
+                                        job.id,
                                         'interview'.tr,
                                       );
                                       Get.back();
@@ -295,7 +289,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                                     title: Text('accepted'.tr),
                                     onTap: () {
                                       controller.updateStatus(
-                                        job.jobId,
+                                        job.id,
                                         'accepted'.tr,
                                       );
                                       Get.back();
@@ -306,7 +300,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                                     title: Text('rejected'.tr),
                                     onTap: () {
                                       controller.updateStatus(
-                                        job.jobId,
+                                        job.id,
                                         'rejected'.tr,
                                       );
                                       Get.back();
@@ -331,7 +325,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                       ),
                       const SizedBox(width: 8,),
                       IconButton(
-                        onPressed: () => controller.removeAppliedJob(job.jobId),
+                        onPressed: () => controller.removeAppliedJob(job),
                         icon: Icon(
                           Icons.delete_outline_rounded,
                           color: accentColor,
@@ -350,7 +344,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
     );
   }
 
-  void showNoteDialog(JobModel job) {
+  void showNoteDialog(AppliedJobModel job) {
     final noteController =
         TextEditingController(
       text: job.notes,
@@ -373,7 +367,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
 
       onConfirm: () {
         controller.updateNote(
-          job.jobId,
+          job.id,
           noteController.text,
         );
 

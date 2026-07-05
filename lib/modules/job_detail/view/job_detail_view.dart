@@ -580,15 +580,18 @@ class JobDetailView extends GetView<JobDetailController> {
               final job = controller.job.value;
               if (job == null) return const SizedBox();
 
-              final isSaved = savedController.isSaved(job.jobId);
+              final isSaved = savedController.savedJobs
+                  .any((e) => e.jobId == job.jobId);
 
               return IconButton(
                 tooltip: isSaved ? 'remove_from_favorites'.tr : 'save_jobs'.tr,
                 onPressed: () {
                   if (isSaved) {
-                    savedController.removeJob(job.jobId);
+                    final savedJob = savedController.savedJobs
+                        .firstWhere((e) => e.jobId == job.jobId);
+                    savedController.removeSavedJob(savedJob);
                   } else {
-                    savedController.saveJob(job);
+                    savedController.toggleSavedJob(job);
 
                     Get.snackbar(
                       'success'.tr,
@@ -1015,7 +1018,7 @@ class JobDetailView extends GetView<JobDetailController> {
                                           );
                                         if(Get.isRegistered<AppliedJobsController>()){
                                           Get.find<AppliedJobsController>()
-                                              .addAppliedJob(job);
+                                              .appliedJob(job);
                                         }
                                       },
                                       child: Text(

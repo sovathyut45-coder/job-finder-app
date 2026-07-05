@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:job_finder_app/core/network/dio_client.dart';
 
 class JobDatasource {
@@ -64,4 +65,163 @@ class JobDatasource {
     return [];
   }
     }
+
+  // ✅ រក្សាទុក ឬលុបការងារ
+  Future<Response> saveJob({
+    required String token,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      return await DioClient.authDio.post(
+        '/saved-jobs/toggle',
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json', // បន្ថែមដើម្បីទទួលទិន្នន័យជា JSON
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      rethrow; // បញ្ជូនកំហុសទៅកាន់ Controller ដើម្បីបង្ហាញសារ
+    }
+  }
+
+  // ✅ ទាញយកបញ្ជីការងារដែលបានរក្សាទុក
+  Future<Response> getSavedJobs({
+    required String token,
+  }) async {
+    try {
+      return await DioClient.authDio.get(
+        '/saved-jobs',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+    } on DioException catch (e) {
+      rethrow;
+    }
+  }
+
+  // ✅ លុបការងារចេញពីបញ្ជី
+  Future<Response> deleteSaveJob({
+    required String token,
+    required String id, // ប្តូរឈ្មោះពី jobId ទៅ id ដើម្បីត្រូវគ្នានឹងផ្លូវ API
+    }) async {
+      try {
+        return await DioClient.authDio.delete(
+          '/saved-jobs/$id',
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+      } on DioException catch (e) {
+        rethrow;
+      }
+    }
+
+    Future<Response> applyJob({
+      required String token,
+      required Map<String, dynamic> data,
+    })async{
+      try{
+        return await DioClient.authDio.post(
+        '/applied-jobs',
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      }on DioException catch(e){
+        rethrow;
+      }
+    }
+
+    Future<Response> getAppliedJobs({
+      required String token,
+    })async{
+      try{
+        return await DioClient.authDio.get(
+        '/applied-jobs',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      }on DioException catch(e){
+        rethrow;
+      }
+    }
+
+    Future<Response> deleteAppliedJob({
+      required String token,
+      required String id, 
+      }) async {
+        try {
+          return await DioClient.authDio.delete(
+            '/applied-jobs/$id',
+            options: Options(
+              headers: {
+                'Authorization': 'Bearer $token',
+                'Accept': 'application/json',
+              },
+            ),
+          );
+        } on DioException catch (e) {
+          rethrow;
+        }
+      }
+      Future<Response> updateStatus({
+        required String token,
+        required Map<String, dynamic> data,
+        required int id,
+      })async{
+        try{
+          return await DioClient.authDio.patch(
+          '/applied-jobs/$id/status',
+          data: data,
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+        }on DioException catch(e){
+          rethrow;
+        }
+      }
+
+      Future<Response> updateNote({
+        required String token,
+        required Map<String,dynamic> data,
+        required int id,
+      })async{
+        try{
+          return await DioClient.authDio.patch(
+          '/applied-jobs/$id/notes',
+          data: data,
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+        }on DioException catch(e){
+          rethrow;
+        }
+      }
+  
 }

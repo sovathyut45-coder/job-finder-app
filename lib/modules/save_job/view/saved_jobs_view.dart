@@ -279,15 +279,15 @@ class SavedJobsView extends GetView<SavedJobsController> {
             ],
           ),
           child: ListTile(
-            onTap: () {
-              Get.toNamed(
-                AppRoutes.jobDetails,
-                arguments: job,
-              );
-            },
+            // onTap: () {
+            //   Get.toNamed(
+            //     AppRoutes.jobDetails,
+            //     arguments: job,
+            //   );
+            // },
             contentPadding: const EdgeInsets.all(16),
             title: Text(
-              job.jobTitle,
+              job.title,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -300,7 +300,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
                   child: Text(
-                    job.employerName,
+                    job.company,
                     style: TextStyle(
                       fontSize: 14,
                       color: textSecondary,
@@ -310,7 +310,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
                   child: Text(
-                    job.jobLocation,
+                    job.location,
                     style: TextStyle(
                       fontSize: 14,
                       color: textSecondary,
@@ -320,7 +320,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
                   child: Text(
-                    "Save Date: ${formatDate(job.savedDate)}",
+                    "Save Date: ${formatDate(job.createdAt?.toString() ?? '')}",
                     style: TextStyle(
                       fontSize: 14,
                       color: textSecondary,
@@ -330,7 +330,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
               ],
             ),
             trailing: IconButton(
-              onPressed: () => controller.removeJob(job.jobId),
+              onPressed: () => controller.removeSavedJob(job),
               icon: Icon(
                 Icons.delete_outline_rounded,
                 color: accentColor,

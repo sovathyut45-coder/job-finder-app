@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
+import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 
 class DashboardController extends GetxController{
   final currentIndex = 0.obs;
   final box = GetStorage();
+  final savecontroller = Get.find<SavedJobsController>();
+  final appliedcontroller = Get.find<AppliedJobsController>();
 
   final savedCount = 0.obs;
   final recentCount = 0.obs;
@@ -25,39 +29,29 @@ class DashboardController extends GetxController{
   }
 
   void loadStats(){
-    savedCount.value = (box.read('save_jobs') ?? []).length;
+    savedCount.value = savecontroller.savedJobs.length;
     recentCount.value = (box.read('recent_jobs') ?? []).length;
     searchCount.value = (box.read('search_history') ?? []).length;
-    appliedCount.value = (box.read('applied_jobs') ?? []).length;
+    appliedCount.value = appliedcontroller.appliedJobs.length;
   }
 
   void loadApplicationStats() {
-    final data = box.read('applied_jobs') ?? [];
 
-    final jobs = List<Map<String, dynamic>>.from(data);
+    final jobs = appliedcontroller.appliedJobs;
 
     appliedCount.value = jobs.length;
 
     interviewCount.value = jobs.where(
-          (e) =>
-              e['application_status'] ==
-              'Interview',
-        ).length;
+      (e) => e.status == 'Interview',
+    ).length;
 
-    acceptedCount.value =
-        jobs.where(
-          (e) =>
-              e['application_status'] ==
-              'Accepted',
-        ).length;
+    acceptedCount.value = jobs.where(
+      (e) => e.status == 'Accepted',
+    ).length;
 
-    rejectedCount.value =
-        jobs.where(
-          (e) =>
-              e['application_status'] ==
-              'Rejected',
-        ).length;
+    rejectedCount.value = jobs.where(
+      (e) => e.status == 'Rejected',
+    ).length;
   }
-
 
 }
