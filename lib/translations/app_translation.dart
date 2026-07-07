@@ -45,6 +45,8 @@ class AppTranslation extends Translations {
           'enter_note...': 'Enter Note...',
           'no_note': 'No Note',
           'Applied On' : 'Applied on',
+          'clear_applied_jobs' : 'Clear Applied Jobs',
+          'the_action_cannot_be_undone' : 'The action cannot be undone',
           
 
 
@@ -70,6 +72,7 @@ class AppTranslation extends Translations {
           'account': 'Account',
           'email': 'Email',
           'password': 'Password',
+          'change_password': 'Change Password',
           'your_activity': 'Your Activity',
           
 
@@ -104,18 +107,34 @@ class AppTranslation extends Translations {
           'yes': 'Yes',
           'no': 'No',
 
+          // Profile
+          'edit_profile': 'Edit Profile',
+          'edit': 'Edit',
+          'name': 'Name',
+          'update': 'Update',
+
           // About
           'about_app': 'About App',
           'job_finder_app': 'Job Finder App',
           'job_finder': 'Job Finder',
           'built_with_flutter_getx':
               'Built with Flutter & GetX',
+          'version': 'Version',
+          'developer': 'Developer',
+          'about': 'About',
+          'data_management' : 'Data Management',
+          'preferences' : 'Preferences',
+          'appearance' : 'Appearance',
 
           // Contact
           'contact_us': 'Contact Us',
 
           // Auth
           'logout': 'Logout',
+          'login': 'Login',
+          'register': 'Register',
+          'are_you_sure_you_want_to_logout?': 'Are you sure you want to logout?',
+          'yes,logout': 'Yes, Logout',
 
           'results' : 'Result'
         },
@@ -164,6 +183,8 @@ class AppTranslation extends Translations {
           'enter_note...': 'សូមបញ្ចូលកំណត់ចំណាំ...',
           'no_note': 'គ្មានកំណត់ចំណាំ',
           'Applied On' : 'បានដាក់ពាក្យនៅ',
+          'clear_applied_jobs' : 'លុបការងារដែលបានដាក់',
+          'the_action_cannot_be_undone': 'សកម្មភាពនេះមិនអាចលុបចោល ឬត្រឡប់វិញបានទេ',
 
           // save 
           'save' : 'រក្សាទុក',
@@ -187,6 +208,7 @@ class AppTranslation extends Translations {
           'account': 'គណនី',
           'email': 'អ៊ីមែល',
           'password': 'ពាក្យសម្ងាត់',
+          'change_password' : 'ប្ដូរពាក្យសម្ងាត់',
           'your_activity': 'សកម្មភាពរបស់អ្នក',
 
           // home 
@@ -209,7 +231,7 @@ class AppTranslation extends Translations {
           'share': 'ចែករំលែក',
           'shared': 'បានចែករំលែក',
           'no_job_available': 'មិនមានការងារទេ',
-          'job_information': 'ព័ត៌មានការងារ',
+          'job_information': 'ព័ត៌មានអំពីការងារ',
           'job_description': 'ការពិពណ៌នាការងារ',
           'you_are_about_to_open_the_company_application_page':
               'អ្នកកំពុងបើកទំព័រដាក់ពាក្យរបស់ក្រុមហ៊ុន',
@@ -222,6 +244,11 @@ class AppTranslation extends Translations {
           'yes': 'បាទ/ចាស',
           'no': 'ទេ',
 
+          'edit_profile': 'កែប្រែព័ត៌មានផ្ទាល់ខ្លួន',
+          'edit': 'កែសម្រួល',
+          'name': 'ឈ្មោះ',
+          'update': 'ធ្វើចប្បន្នភាព',
+
           // About
           'about_app': 'អំពីកម្មវិធី',
           'job_finder_app':
@@ -230,6 +257,12 @@ class AppTranslation extends Translations {
               'កម្មវិធីស្វែងរកការងារ',
           'built_with_flutter_getx':
               'បង្កើតដោយ Flutter និង GetX',
+          'version': 'កំណែ',
+          'developer': 'អ្នកអភិវឌ្ឍន៍',
+          'about': 'អំពី',
+          'data_management': 'ការគ្រប់គ្រងទិន្នន័យ',
+          'preferences': 'ចំណូលចិត្ត',
+          'appearance': 'រូបរាង',
           
 
           // Contact
@@ -238,6 +271,10 @@ class AppTranslation extends Translations {
 
           // Auth
           'logout': 'ចាកចេញ',
+          'login': 'ចូលគណនី',
+          'register': 'ចុះឈ្មោះ',
+          'are_you_sure_you_want_to_logout?': 'តើអ្នកប្រាកដថាចង់ចាកចេញមែនទេ?',
+          'yes,logout': 'បាទ/ចាស, ចាកចេញ',
 
           'results': 'លទ្ធផល',
         },

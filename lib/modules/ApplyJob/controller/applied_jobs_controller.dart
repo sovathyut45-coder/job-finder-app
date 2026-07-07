@@ -185,7 +185,7 @@ class AppliedJobsController extends GetxController {
         );
         if (Get.isRegistered<DashboardController>()) {
           Get.find<DashboardController>().loadStats();
-          Get.find<DashboardController>().loadApplicationStats();
+          //Get.find<DashboardController>().loadApplicationStats();
         }
       }else{
         throw 'មិនអាចរក្សាទុកបាន (កូដ: ${response.statusCode})';
@@ -214,7 +214,7 @@ class AppliedJobsController extends GetxController {
         appliedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
         if (Get.isRegistered<DashboardController>()) {
           Get.find<DashboardController>().loadStats();
-          Get.find<DashboardController>().loadApplicationStats();
+          //Get.find<DashboardController>().loadApplicationStats();
         }
         Get.snackbar(
           'បានលុបបាន',
@@ -229,6 +229,34 @@ class AppliedJobsController extends GetxController {
     } catch (e) {
       Get.snackbar('កំហុស', e.toString(), snackPosition: SnackPosition.BOTTOM);
     } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> clearAppliedJob()async{
+    try{
+      isLoading.value = true;
+      final response = await repository.clearAppliedJob(
+        token: authService.token!
+      );
+
+      if(response.statusCode == 200){
+        appliedJobs.clear();
+        if (Get.isRegistered<DashboardController>()) {
+          Get.find<DashboardController>().loadStats();
+          //Get.find<DashboardController>().loadApplicationStats();
+        }
+        Get.snackbar(
+          'បានលុបបាន',
+          'ការរក្សាទុកបានលុបដោយជោគជ័យ',
+          snackPosition: SnackPosition.TOP,
+        );
+      }else{
+        throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';
+      }
+    }catch(e){
+      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
+    }finally{
       isLoading.value = false;
     }
   }

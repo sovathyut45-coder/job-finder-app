@@ -124,6 +124,28 @@ class SavedJobsController extends GetxController {
     }
   }
 
+  Future<void> clearSavedJobs() async {
+    try {
+      isLoading.value = true;
+
+      final response = await repository.clearSaveJobs(
+        token: authService.token!,
+      );
+
+      if (response.statusCode == 200) {
+        savedJobs.clear();
+
+        _updateDashboardStats();
+        Get.snackbar(
+          'Success',
+          'All saved jobs removed.',
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   bool isSaved(String jobId) {
     return savedJobs.any((job) => job.jobId == jobId);
   }

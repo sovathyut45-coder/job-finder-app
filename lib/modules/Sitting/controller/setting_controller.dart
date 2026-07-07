@@ -44,42 +44,6 @@ class SettingController extends GetxController {
     });
   }
 
-  void clearSavedJobs() {
-    box.remove('save_jobs');
-
-    Get.snackbar(
-      'Success',
-      'Saved jobs cleared',
-    );
-    Future.microtask(() {
-      if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadStats();
-      }
-      if(Get.isRegistered<SavedJobsController>()){
-        Get.find<SavedJobsController>().getSavedJobs();
-      }
-    });
-  }
-
-  void clearAppliedJobs() {
-    box.remove('applied_jobs');
-
-    Get.snackbar(
-      'Success',
-      'Applied jobs cleared',
-    );
-    Future.microtask(() {
-      if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadStats();
-      }
-      if(Get.isRegistered<AppliedJobsController>()){
-        Get.find<AppliedJobsController>().getAppliedJob();
-      }
-    });
-  }
-
   Future<void> showClearDialog({
   required String title,
   required VoidCallback onConfirm,
@@ -87,8 +51,8 @@ class SettingController extends GetxController {
   final result = await Get.dialog<bool>(
     AlertDialog(
       title: Text(title),
-      content: const Text(
-        'This action cannot be undone.',
+      content: Text(
+        'the_action_cannot_be_undone'.tr,
       ),
       actions: [
         TextButton(
