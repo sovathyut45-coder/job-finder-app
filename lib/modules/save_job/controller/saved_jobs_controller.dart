@@ -31,7 +31,7 @@ class SavedJobsController extends GetxController {
     try {
       isLoading.value = true;
       if (authService.token == null || authService.token!.isEmpty) {
-        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+        throw 'Please login first';
       }
 
       final response = await repository.saveJob(
@@ -68,7 +68,7 @@ class SavedJobsController extends GetxController {
 
       if (authService.token == null || authService.token!.isEmpty) {
         //savedJobs.clear();
-        throw 'សូមចូលប្រើប្រាស់ដើម្បីមើលការងារដែលបានរក្សាទុក';
+        throw 'please login first';
       }
 
       final response = await repository.getSavedJobs(token: authService.token!);
@@ -96,7 +96,7 @@ class SavedJobsController extends GetxController {
       isLoading.value = true;
 
       if (authService.token == null || authService.token!.isEmpty) {
-        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+        throw 'Please login first';
       }
 
       final response = await repository.deleteSaveJob(
@@ -107,8 +107,8 @@ class SavedJobsController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 204) {
         savedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
         Get.snackbar(
-          'បានលុបបាន',
-          'ការរក្សាទុកបានលុបដោយជោគជ័យ',
+          'Success',
+          'Saved job deleted successfully',
           snackPosition: SnackPosition.TOP,
         );
         _updateDashboardStats();

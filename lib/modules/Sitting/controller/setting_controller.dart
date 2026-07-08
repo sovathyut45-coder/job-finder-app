@@ -2,10 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
-import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 
 class SettingController extends GetxController {
   final box = GetStorage();

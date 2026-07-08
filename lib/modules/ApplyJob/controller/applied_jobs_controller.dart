@@ -31,7 +31,7 @@ class AppliedJobsController extends GetxController {
       isLoading.value = true;
 
       if (authService.token == null || authService.token!.isEmpty) {
-        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+        throw 'Please login first';
       }
 
       final response = await repository.updateStatus(
@@ -69,7 +69,7 @@ class AppliedJobsController extends GetxController {
       isLoading.value = true;
 
       if (authService.token == null || authService.token!.isEmpty) {
-        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+        throw 'Please login first';
       }
 
       final response = await repository.updateNote(
@@ -172,7 +172,7 @@ class AppliedJobsController extends GetxController {
     try{
       isLoading.value = true;
       if(authService.token == null || authService.token!.isEmpty){
-        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+        throw 'Please login first';
       }
       final response = await repository.getAppliedJobs(
         token: authService.token!,
@@ -203,7 +203,7 @@ class AppliedJobsController extends GetxController {
     try{
       isLoading.value = true;
       if(authService.token == null || authService.token!.isEmpty){
-        throw 'សូមចូលប្រើប្រាស់ជាមុនសិន';
+        throw 'Please login first';
       }
       final response = await repository.deleteAppliedJob(
         token: authService.token!,
@@ -217,8 +217,8 @@ class AppliedJobsController extends GetxController {
           //Get.find<DashboardController>().loadApplicationStats();
         }
         Get.snackbar(
-          'បានលុបបាន',
-          'ការរក្សាទុកបានលុបដោយជោគជ័យ',
+          'Success',
+          'Applied job deleted successfully',
           snackPosition: SnackPosition.TOP,
         );
       }else{
@@ -247,8 +247,8 @@ class AppliedJobsController extends GetxController {
           //Get.find<DashboardController>().loadApplicationStats();
         }
         Get.snackbar(
-          'បានលុបបាន',
-          'ការរក្សាទុកបានលុបដោយជោគជ័យ',
+          'Success',
+          'Delete all applied jobs successfully',
           snackPosition: SnackPosition.TOP,
         );
       }else{

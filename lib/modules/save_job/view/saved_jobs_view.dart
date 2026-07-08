@@ -180,7 +180,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
-import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 
 class SavedJobsView extends GetView<SavedJobsController> {

@@ -27,7 +27,6 @@ class DashboardController extends GetxController{
   void onInit() {
     super.onInit();
     loadStats();
-    //loadApplicationStats();
   }
   
   void changeIndex(int index){
