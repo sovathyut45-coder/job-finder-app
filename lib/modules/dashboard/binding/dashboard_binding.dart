@@ -24,7 +24,7 @@ class DashboardBinding extends Bindings {
     HomeBinding().dependencies();
 
     Get.lazyPut<DashboardController>(
-      () => DashboardController(),
+      () => DashboardController(Get.find<JobRepository>()),
     );
 
     RecentJobBinding().dependencies();

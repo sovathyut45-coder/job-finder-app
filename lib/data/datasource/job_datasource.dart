@@ -126,6 +126,24 @@ class JobDatasource {
       }
     }
 
+    Future<Response> clearSaveJobs({
+      required String token,
+      })async{
+      try{
+        return await DioClient.authDio.delete(
+        '/saved-jobs',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      }on DioException catch(e){
+        rethrow;
+      }
+    }
+
     Future<Response> applyJob({
       required String token,
       required Map<String, dynamic> data,
@@ -222,6 +240,34 @@ class JobDatasource {
         }on DioException catch(e){
           rethrow;
         }
+      }
+
+      Future<Response> clearAppliedJob({
+        required String token
+      })async{
+        return await DioClient.authDio.delete(
+          '/applied-jobs',
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
+      }
+
+      Future<Response> getDashboardStats({
+        required String token,
+      }) {
+        return DioClient.authDio.get(
+          '/dashboard/stats',
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Accept': 'application/json',
+            },
+          ),
+        );
       }
   
 }

@@ -567,7 +567,7 @@ class JobDetailView extends GetView<JobDetailController> {
           foregroundColor: Colors.white,
 
           title: Text(
-            'job_details'.tr,
+            'job_detail'.tr,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,

@@ -109,8 +109,8 @@ class ProfileView extends GetView<ProfileController> {
                       leading: const Icon(
                         Icons.person_outline,
                       ),
-                      title: const Text(
-                        'Edit Profile',
+                      title: Text(
+                        'edit_profile'.tr,
                       ),
                       trailing:
                           const Icon(
@@ -129,8 +129,8 @@ class ProfileView extends GetView<ProfileController> {
                       leading: const Icon(
                         Icons.lock_outline,
                       ),
-                      title: const Text(
-                        'Change Password',
+                      title: Text(
+                        'change_password'.tr,
                       ),
                       trailing:
                           const Icon(
@@ -145,21 +145,21 @@ class ProfileView extends GetView<ProfileController> {
                   Card(
                     child: ListTile(
                       leading: const Icon(Icons.logout),
-                      title: const Text('Logout'),
+                      title: Text('logout'.tr),
                       onTap: () {
                         showDialog(
                           context: context, 
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Logout'),
-                              content: const Text('Are you sure you want to log out?'),
+                              title: Text('logout'.tr),
+                              content: Text('are_you_sure_you_want_to_logout?'.tr),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(), 
                                   style: TextButton.styleFrom(
                                     foregroundColor: Colors.green,
                                   ),
-                                  child: const Text('Cancel'),
+                                  child: Text('cancel'.tr),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -170,7 +170,7 @@ class ProfileView extends GetView<ProfileController> {
                                   style: TextButton.styleFrom(
                                     foregroundColor: Colors.red,
                                   ),
-                                  child: const Text('Yes, Logout'),
+                                  child: Text('yes,logout'.tr),
                                 ),
                               ],
                             );

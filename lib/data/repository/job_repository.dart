@@ -108,5 +108,29 @@ Future<List<JobModel>> getJobs({
     );
   }
 
+  Future<Response> clearSaveJobs({
+    required String token,
+  }){
+    return datasource.clearSaveJobs(
+      token: token,
+    );
+  }
+
+  Future<Response> clearAppliedJob({
+    required String token,
+  }){
+    return datasource.clearAppliedJob(
+      token: token,
+    );
+  }
+
+  Future<Response> getDashboardStats({
+    required String token,
+  }) {
+    return datasource.getDashboardStats(
+      token: token,
+    );
+  }
+
 
 }
