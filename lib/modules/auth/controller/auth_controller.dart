@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,6 +17,9 @@ class AuthController extends GetxController {
 
   final passwordController =
       TextEditingController();
+  final confirmPasswordController =
+      TextEditingController();
+  final currentPasswordController = TextEditingController();
 
   final nameController =
       TextEditingController();
@@ -41,6 +45,9 @@ class AuthController extends GetxController {
 
   final isUploading = false.obs;
 
+  final forgotPasswordFormKey = GlobalKey<FormState>();
+  final changePasswordFormKey = GlobalKey<FormState>();
+
   @override
   void onInit() {
     super.onInit();
@@ -58,6 +65,8 @@ class AuthController extends GetxController {
 
     editNameController.dispose();
     editEmailController.dispose();
+    confirmPasswordController.dispose();
+    currentPasswordController.dispose();
 
     super.onClose();
   }
@@ -130,12 +139,16 @@ class AuthController extends GetxController {
         AppRoutes.dashboard,
       );
 
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-      );
-    } finally {
+    } on DioException catch (e) {
+  print(e.response?.data);
+
+  Get.snackbar(
+    'Login Failed',
+    e.response?.data['message'] ?? 'Unknown error',
+    snackPosition: SnackPosition.BOTTOM,
+    duration: const Duration(seconds: 3),
+  );
+} finally {
       isLoading.value = false;
     }
   }
@@ -299,6 +312,67 @@ class AuthController extends GetxController {
     } finally {
 
       isUploading.value = false;
+    }
+  }
+
+  Future<void> forgotPassword() async {
+    try {
+      isLoading.value = true;
+
+      await repository.forgotPassword(
+        {
+          'email': emailController.text.trim(),
+        }
+      );
+      Get.snackbar(
+        'Success',
+        'Password reset link sent to your email',
+      );
+      emailController.clear();
+      Get.back();
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> changePassword() async {
+    try {
+      isLoading.value = true;
+      await repository.changePassword(
+        token: authService.token!,
+        data: {
+          'current_password' : currentPasswordController.text.trim(),
+          'password': passwordController.text.trim(),
+          'password_confirmation': confirmPasswordController.text.trim(),
+        },
+      );
+      Get.snackbar(
+        'Success',
+        'Password changed successfully',
+      );
+
+      authService.clearToken();
+      currentPasswordController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
+
+      Get.offAllNamed(
+        AppRoutes.login,
+      );
+        
+    }catch(e){
+      Get.snackbar(
+        'Error',
+        e.toString(),
+      );
+    }
+    finally{
+      isLoading.value = false;
     }
   }
 }

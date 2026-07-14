@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../datasource/auth_datasource.dart';
@@ -36,6 +37,19 @@ class AuthRepository {
 
   Future profile(String token) {
     return datasource.profile(token);
+  }
+
+  Future forgotPassword(
+    Map<String, dynamic> data
+  ){
+    return datasource.forgotPassword(data: data);
+  }
+
+  Future changePassword({
+    required String token,
+    required Map<String, dynamic> data,
+  }) {
+    return datasource.changePassword(token: token, data: data);
   }
 
   Future updateProfile({

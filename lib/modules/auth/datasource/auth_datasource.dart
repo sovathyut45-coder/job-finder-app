@@ -46,6 +46,30 @@ class AuthDatasource {
     
   }
 
+  Future<Response> forgotPassword({
+    required Map<String, dynamic> data,
+  }){
+    return DioClient.authDio.post(
+      '/forgot-password',
+      data: data,
+    );
+  }
+
+  Future<Response> changePassword({
+    required String token,
+    required Map<String, dynamic> data,
+  }){
+    return DioClient.authDio.post(
+      '/change-password',
+      data: data,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        }
+      )
+    );
+  }
+
   Future<Response> profile(
     String token
   ) async{
