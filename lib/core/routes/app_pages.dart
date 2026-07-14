@@ -5,6 +5,7 @@ import 'package:job_finder_app/modules/ApplyJob/view/applied_job_view.dart';
 import 'package:job_finder_app/modules/Sitting/binding/setting_binding.dart';
 import 'package:job_finder_app/modules/Sitting/view/setting_view.dart';
 import 'package:job_finder_app/modules/auth/binding/auth_binding.dart';
+import 'package:job_finder_app/modules/auth/view/forgot_password_view.dart';
 import 'package:job_finder_app/modules/auth/view/login_view.dart';
 import 'package:job_finder_app/modules/auth/view/register_view.dart';
 import 'package:job_finder_app/modules/dashboard/binding/dashboard_binding.dart';
@@ -64,7 +65,7 @@ class AppPages {
 
     GetPage(
       name: AppRoutes.login,
-      page: () => const LoginView(),
+      page: () => LoginView(),
       binding: AuthBinding(),
     ),
 
@@ -86,5 +87,9 @@ class AppPages {
       page: () =>
           const EditProfileView(),
     ),
+    GetPage(
+      name: AppRoutes.forgotPassword,
+      page: ()=> const ForgotpasswordView(),
+    )
   ];
 }

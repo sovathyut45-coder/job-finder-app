@@ -249,6 +249,7 @@ import 'package:get/get.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
 import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 import 'package:job_finder_app/modules/Sitting/controller/setting_controller.dart';
+import 'package:job_finder_app/modules/auth/controller/auth_controller.dart';
 import 'package:job_finder_app/modules/save_job/controller/saved_jobs_controller.dart';
 import 'package:job_finder_app/translations/language/controller/language_controller.dart';
 
@@ -258,6 +259,7 @@ class SettingView extends GetView<SettingController> {
   @override
   Widget build(BuildContext context) {
     final theme = Get.find<ThemeController>();
+    final auth = Get.find<AuthController>();
     final languageController = Get.find<LanguageController>();
     final savecontroller = Get.find<SavedJobsController>();
     final appliedcontroller = Get.find<AppliedJobsController>();
@@ -501,7 +503,9 @@ class SettingView extends GetView<SettingController> {
                     title: 'logout'.tr,
                     iconColor: Colors.redAccent,
                     textColor: Colors.redAccent,
-                    onTap: () {},
+                    onTap: () {
+                      auth.logout();
+                    },
                   ),
                 ],
               ),
