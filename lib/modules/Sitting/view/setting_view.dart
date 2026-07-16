@@ -297,7 +297,7 @@ class SettingView extends GetView<SettingController> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 value: theme.isDark.value,
-                activeColor: Theme.of(context).colorScheme.primary,
+                activeThumbColor: Theme.of(context).colorScheme.primary,
                 onChanged: (_) => theme.toggleTheme(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -525,7 +525,7 @@ class SettingView extends GetView<SettingController> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: Get.theme.colorScheme.primary.withOpacity(0.8),
+          color: Get.theme.colorScheme.primary.withValues(alpha: 0.8),
           letterSpacing: 0.6,
         ),
       ),

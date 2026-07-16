@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/data/datasource/job_datasource.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';

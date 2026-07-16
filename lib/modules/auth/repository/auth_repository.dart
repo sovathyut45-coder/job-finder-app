@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../datasource/auth_datasource.dart';

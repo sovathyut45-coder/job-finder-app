@@ -1,6 +1,5 @@
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
-import 'package:job_finder_app/modules/ApplyJob/binding/applied_jobs_binding.dart';
 import 'package:job_finder_app/modules/ApplyJob/view/applied_job_view.dart';
 import 'package:job_finder_app/modules/Sitting/binding/setting_binding.dart';
 import 'package:job_finder_app/modules/Sitting/view/setting_view.dart';

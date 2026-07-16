@@ -98,7 +98,7 @@ class StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      shadowColor: color.withOpacity(0.15),
+      shadowColor: color.withValues(alpha: 0.15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -115,8 +115,8 @@ class StatCard extends StatelessWidget {
               padding:
                   const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: color.withOpacity(
-                  0.15,
+                color: color.withValues(
+                  alpha: 0.15,
                 ),
                 shape: BoxShape.circle,
               ),

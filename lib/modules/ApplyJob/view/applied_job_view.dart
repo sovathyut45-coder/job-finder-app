@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
-import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/data/model/applied_job_model.dart';
-import 'package:job_finder_app/data/model/job_model.dart';
 import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 
 class AppliedJobView extends GetView<AppliedJobsController> {
@@ -53,7 +51,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
           Icon(
             Icons.bookmark_border_rounded,
             size: 80,
-            color: textSecondary.withOpacity(0.4),
+            color: textSecondary.withValues(alpha: 0.4),
           ),
           const SizedBox(height: 20),
           Text(
@@ -97,7 +95,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: primaryColor.withOpacity(Get.find<ThemeController>().isDark.value ? 0.15 : 0.08),
+                color: primaryColor.withValues(alpha: Get.find<ThemeController>().isDark.value ? 0.15 : 0.08),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),

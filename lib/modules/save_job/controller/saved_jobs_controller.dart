@@ -47,6 +47,14 @@ class SavedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        
+        Get.snackbar(
+          'Success',
+          'Job saved successfully',
+          duration: Duration(seconds: 1),
+          snackPosition: SnackPosition.TOP,
+        );
+
         await getSavedJobs(); 
         _updateDashboardStats();
       } else {
@@ -105,12 +113,13 @@ class SavedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 204) {
-        savedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
         Get.snackbar(
           'Success',
           'Saved job deleted successfully',
           snackPosition: SnackPosition.TOP,
         );
+        savedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
+        
         _updateDashboardStats();
       } else {
         throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';

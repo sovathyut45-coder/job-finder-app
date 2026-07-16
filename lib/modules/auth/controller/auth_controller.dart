@@ -86,12 +86,78 @@ class AuthController extends GetxController {
         'Register Success',
       );
 
-      Get.back();
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
+      Get.offAllNamed(
+        AppRoutes.login,
       );
+      emailController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
+      nameController.clear();
+    } on DioException catch (e) {
+
+      Get.dialog(
+        Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.blueGrey,
+                  child: Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                Text(
+                  'Register Failed',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Text(
+                  e.response?.data['message'],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.red,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  height: 40,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Colors.red,
+                      elevation: 0,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () => Get.offAllNamed(
+                      AppRoutes.register,
+                    ),
+                    child: const Text('OK'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      );
+
     } finally {
       isLoading.value = false;
     }
@@ -139,16 +205,75 @@ class AuthController extends GetxController {
         AppRoutes.dashboard,
       );
 
-    } on DioException catch (e) {
-  print(e.response?.data);
+      emailController.clear();
+      passwordController.clear();
 
-  Get.snackbar(
-    'Login Failed',
-    e.response?.data['message'] ?? 'Unknown error',
-    snackPosition: SnackPosition.BOTTOM,
-    duration: const Duration(seconds: 3),
-  );
-} finally {
+    } on DioException catch (e) {
+        Get.dialog(
+          Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+
+                  const CircleAvatar(
+                    radius: 35,
+                    backgroundColor: Colors.red,
+                    child: Icon(
+                      Icons.error_outline,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'Login Failed',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Text(
+                    e.response?.data['message'] ?? 'Invalid credentials',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => Get.offAndToNamed(
+                        AppRoutes.login,
+                      ),
+                      child: const Text('OK'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      } finally {
       isLoading.value = false;
     }
   }

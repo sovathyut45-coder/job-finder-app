@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';

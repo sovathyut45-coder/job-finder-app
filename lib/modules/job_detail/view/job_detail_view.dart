@@ -593,14 +593,6 @@ class JobDetailView extends GetView<JobDetailController> {
                   } else {
                     savedController.toggleSavedJob(job);
 
-                    Get.snackbar(
-                      'success'.tr,
-                      'Added to favorites'.tr,
-                      duration: const Duration(seconds: 2),
-                      backgroundColor: accentColor,
-                      colorText: Colors.white,
-                    );
-
                     // Get.showSnackbar(
                     //   GetSnackBar(
                     //     message:
@@ -714,7 +706,7 @@ class JobDetailView extends GetView<JobDetailController> {
                 Card(
                   color: cardColor,
                   elevation: 2,
-                  shadowColor: primaryColor.withOpacity(0.15),
+                  shadowColor: primaryColor.withValues(alpha: 0.15),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -722,7 +714,7 @@ class JobDetailView extends GetView<JobDetailController> {
                       children: [
                         CircleAvatar(
                           radius: 35,
-                          backgroundColor: primaryColor.withOpacity(0.1),
+                          backgroundColor: primaryColor.withValues(alpha: 0.1),
                           child: job.employerLogo.isNotEmpty
                               ? ClipOval(
                                   child: Image.network(
@@ -777,7 +769,7 @@ class JobDetailView extends GetView<JobDetailController> {
                 Card(
                   color: cardColor,
                   elevation: 1,
-                  shadowColor: primaryColor.withOpacity(0.1),
+                  shadowColor: primaryColor.withValues(alpha: 0.1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -846,7 +838,7 @@ class JobDetailView extends GetView<JobDetailController> {
                 Card(
                   color: cardColor,
                   elevation: 1,
-                  shadowColor: primaryColor.withOpacity(0.1),
+                  shadowColor: primaryColor.withValues(alpha: 0.1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   child: Padding(
                     padding: const EdgeInsets.all(12),
@@ -873,7 +865,7 @@ class JobDetailView extends GetView<JobDetailController> {
                       backgroundColor: primaryColor,
                       foregroundColor: Colors.white,
                       elevation: 2,
-                      shadowColor: primaryColor.withOpacity(0.3),
+                      shadowColor: primaryColor.withValues(alpha: 0.3),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     // onPressed: () {
@@ -984,7 +976,7 @@ class JobDetailView extends GetView<JobDetailController> {
                                       .textTheme
                                       .bodyMedium
                                       ?.color
-                                      ?.withOpacity(0.7),
+                                      ?.withValues(alpha: 0.7),
                                 ),
                               ),
 

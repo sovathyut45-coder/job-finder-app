@@ -227,7 +227,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
           Icon(
             Icons.bookmark_border_rounded,
             size: 80,
-            color: textSecondary.withOpacity(0.4),
+            color: textSecondary.withValues(alpha: 0.4),
           ),
           const SizedBox(height: 20),
           Text(
@@ -271,7 +271,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: primaryColor.withOpacity(Get.find<ThemeController>().isDark.value ? 0.15 : 0.08),
+                color: primaryColor.withValues(alpha: Get.find<ThemeController>().isDark.value ? 0.15 : 0.08),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
