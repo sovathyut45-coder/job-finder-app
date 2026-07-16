@@ -593,14 +593,6 @@ class JobDetailView extends GetView<JobDetailController> {
                   } else {
                     savedController.toggleSavedJob(job);
 
-                    Get.snackbar(
-                      'success'.tr,
-                      'Added to favorites'.tr,
-                      duration: const Duration(seconds: 2),
-                      backgroundColor: accentColor,
-                      colorText: Colors.white,
-                    );
-
                     // Get.showSnackbar(
                     //   GetSnackBar(
                     //     message:

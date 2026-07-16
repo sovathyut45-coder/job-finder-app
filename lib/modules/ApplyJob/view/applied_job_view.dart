@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
-import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/data/model/applied_job_model.dart';
-import 'package:job_finder_app/data/model/job_model.dart';
 import 'package:job_finder_app/modules/ApplyJob/controller/applied_jobs_controller.dart';
 
 class AppliedJobView extends GetView<AppliedJobsController> {
@@ -23,14 +21,11 @@ class AppliedJobView extends GetView<AppliedJobsController> {
     final textSecondary = Theme.of(context).textTheme.bodyMedium?.color ?? const Color(0xFF64748B);
     const accentColor = Color(0xFFFF6B6B);
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: Obx(
+    return Obx(
         () => controller.appliedJobs.isEmpty
             ? _buildEmptyState(primaryColor, textSecondary)
             : _buildJobsList(primaryColor, cardColor, textPrimary, textSecondary, accentColor),
-      ),
-    );
+      );
   }
 
   String formatDate(String date) {

@@ -11,16 +11,10 @@ import 'package:job_finder_app/translations/app_translation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await dotenv.load(fileName: ".env");
   await GetStorage.init();
-  final box = GetStorage();
-
-print(
-  "START TOKEN = ${box.read('token')}",
-);
   runApp(
     DevicePreview(
-      enabled:!kReleaseMode,
+      enabled: !kReleaseMode,
       builder: (context) => const MainApp(),
     ),
   );
@@ -44,9 +38,6 @@ class MainApp extends StatelessWidget {
       getPages: AppPages.routes,
       initialRoute: AppRoutes.splash,
       initialBinding: InitialBinding(),
-
-      
-     
     );
     
   }

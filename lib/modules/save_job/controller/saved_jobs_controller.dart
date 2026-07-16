@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:job_finder_app/core/Service/auth_service.dart';
@@ -7,6 +8,7 @@ import 'package:job_finder_app/data/model/save_job_model.dart';
 import 'package:job_finder_app/data/repository/job_repository.dart';
 import 'package:job_finder_app/modules/auth/controller/auth_controller.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:path/path.dart';
 
 class SavedJobsController extends GetxController {
   final JobRepository repository;
@@ -47,8 +49,33 @@ class SavedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        await getSavedJobs(); 
+        
+        // Get.snackbar(
+        //   'Success',
+        //   'Job saved successfully',
+        //   duration: Duration(seconds: 1),
+        //   snackPosition: SnackPosition.TOP,
+        // );
+
+        // await getSavedJobs(); 
+        // _updateDashboardStats();
+
+        print("1");
+
+        Get.snackbar(
+          "Success",
+          "Saved",
+        );
+
+        print("2");
+
+        await getSavedJobs();
+
+        print("3");
+
         _updateDashboardStats();
+
+        print("4");
       } else {
         throw 'មិនអាចរក្សាទុកបាន (កូដ: ${response.statusCode})';
       }
@@ -105,12 +132,13 @@ class SavedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 204) {
-        savedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
         Get.snackbar(
           'Success',
           'Saved job deleted successfully',
           snackPosition: SnackPosition.TOP,
         );
+        savedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
+        
         _updateDashboardStats();
       } else {
         throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';

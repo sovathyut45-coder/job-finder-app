@@ -324,9 +324,7 @@ class HomeView extends GetView<HomeController> {
     final searchBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF4FB);
     const secondaryColor = Color(0xFF36BFFA);
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: Obx(
+    return Obx(
         () => RefreshIndicator(
           color: primaryColor,
           onRefresh: controller.refreshJobs,
@@ -712,7 +710,7 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
         ),
-      ),
-    );
+      );
+    
   }
 }

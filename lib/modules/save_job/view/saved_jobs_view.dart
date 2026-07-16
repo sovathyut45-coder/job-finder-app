@@ -198,14 +198,11 @@ class SavedJobsView extends GetView<SavedJobsController> {
     final textSecondary = Theme.of(context).textTheme.bodyMedium?.color ?? const Color(0xFF64748B);
     const accentColor = Color(0xFFFF6B6B);
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: Obx(
+    return Obx(
         () => controller.savedJobs.isEmpty
             ? _buildEmptyState(primaryColor, textSecondary)
             : _buildJobsList(primaryColor, cardColor, textPrimary, textSecondary, accentColor),
-      ),
-    );
+      );
   }
 
   String formatDate(String date) {

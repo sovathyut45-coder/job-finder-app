@@ -43,6 +43,12 @@ class AppliedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Status updated successfully',
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 1),
+        );
         await getAppliedJob ();
       } else {
         throw 'មិនអាច Update Status បាន';
@@ -79,6 +85,12 @@ class AppliedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Note updated successfully',
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 1),
+        );
         await getAppliedJob();
       } else {
         throw 'មិនអាច Update Note បាន';
@@ -220,6 +232,7 @@ class AppliedJobsController extends GetxController {
           'Success',
           'Applied job deleted successfully',
           snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 1),
         );
       }else{
         throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';
@@ -250,6 +263,7 @@ class AppliedJobsController extends GetxController {
           'Success',
           'Delete all applied jobs successfully',
           snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 1),
         );
       }else{
         throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';

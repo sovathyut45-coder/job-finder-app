@@ -86,6 +86,15 @@ class DashboardView extends GetView<DashboardController>{
             )
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+          onPressed: () {
+            Get.defaultDialog(
+              title: "Test",
+              middleText: "Hello",
+            );
+          }
+        ),
       )
     );
     
