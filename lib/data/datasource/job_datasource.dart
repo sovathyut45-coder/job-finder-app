@@ -82,7 +82,7 @@ class JobDatasource {
           },
         ),
       );
-    } on DioException catch (e) {
+    } on DioException {
       rethrow; // បញ្ជូនកំហុសទៅកាន់ Controller ដើម្បីបង្ហាញសារ
     }
   }
@@ -101,7 +101,7 @@ class JobDatasource {
           },
         ),
       );
-    } on DioException catch (e) {
+    } on DioException {
       rethrow;
     }
   }
@@ -121,7 +121,7 @@ class JobDatasource {
             },
           ),
         );
-      } on DioException catch (e) {
+      } on DioException {
         rethrow;
       }
     }
@@ -139,7 +139,7 @@ class JobDatasource {
           },
         ),
       );
-      }on DioException catch(e){
+      }on DioException {
         rethrow;
       }
     }
@@ -159,7 +159,7 @@ class JobDatasource {
           },
         ),
       );
-      }on DioException catch(e){
+      }on DioException {
         rethrow;
       }
     }
@@ -177,7 +177,7 @@ class JobDatasource {
           },
         ),
       );
-      }on DioException catch(e){
+      }on DioException {
         rethrow;
       }
     }
@@ -196,7 +196,7 @@ class JobDatasource {
               },
             ),
           );
-        } on DioException catch (e) {
+        } on DioException {
           rethrow;
         }
       }
@@ -216,7 +216,7 @@ class JobDatasource {
             },
           ),
         );
-        }on DioException catch(e){
+        }on DioException {
           rethrow;
         }
       }
@@ -237,7 +237,7 @@ class JobDatasource {
             },
           ),
         );
-        }on DioException catch(e){
+        }on DioException {
           rethrow;
         }
       }

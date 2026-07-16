@@ -290,7 +290,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:job_finder_app/core/Service/auth_service.dart';
 import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
 import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
 import 'package:job_finder_app/core/widgets/stat_card.dart';
@@ -367,7 +366,7 @@ class HomeView extends GetView<HomeController> {
                   decoration: BoxDecoration(
                     color: searchBg,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: primaryColor.withOpacity(0.1)),
+                    border: Border.all(color: primaryColor.withValues(alpha: 0.1)),
                   ),
                   child: Row(
                     children: [
@@ -468,7 +467,7 @@ class HomeView extends GetView<HomeController> {
                 children: controller.positions.map((position) {
                   return ActionChip(
                     label: Text(position, style: TextStyle(color: primaryColor)),
-                    backgroundColor: primaryColor.withOpacity(0.08),
+                    backgroundColor: primaryColor.withValues(alpha: 0.08),
                     side: BorderSide.none,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -611,7 +610,7 @@ class HomeView extends GetView<HomeController> {
                   return Card(
                     color: cardColor,
                     elevation: 2,
-                    shadowColor: primaryColor.withOpacity(0.12),
+                    shadowColor: primaryColor.withValues(alpha: 0.12),
                     margin: const EdgeInsets.only(bottom: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -631,7 +630,7 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             CircleAvatar(
                               radius: 24,
-                              backgroundColor: primaryColor.withOpacity(0.1),
+                              backgroundColor: primaryColor.withValues(alpha: 0.1),
                               backgroundImage: job.employerLogo.isNotEmpty
                                   ? NetworkImage(job.employerLogo)
                                   : null,
@@ -685,7 +684,7 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Chip(
                                         visualDensity: VisualDensity.compact,
-                                        backgroundColor: primaryColor.withOpacity(0.08),
+                                        backgroundColor: primaryColor.withValues(alpha: 0.08),
                                         label: Text(
                                           job.employmentType.isEmpty ? 'Available' : job.employmentType,
                                           style: TextStyle(

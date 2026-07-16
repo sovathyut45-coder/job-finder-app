@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:job_finder_app/core/Theme/theme_controller.dart';
 import 'package:job_finder_app/core/routes/app_routes.dart';
@@ -85,15 +84,6 @@ class DashboardView extends GetView<DashboardController>{
               label: 'profile'.tr,
             )
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-          onPressed: () {
-            Get.defaultDialog(
-              title: "Test",
-              middleText: "Hello",
-            );
-          }
         ),
       )
     );

@@ -198,11 +198,14 @@ class SavedJobsView extends GetView<SavedJobsController> {
     final textSecondary = Theme.of(context).textTheme.bodyMedium?.color ?? const Color(0xFF64748B);
     const accentColor = Color(0xFFFF6B6B);
 
-    return Obx(
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      body: Obx(
         () => controller.savedJobs.isEmpty
             ? _buildEmptyState(primaryColor, textSecondary)
             : _buildJobsList(primaryColor, cardColor, textPrimary, textSecondary, accentColor),
-      );
+      ),
+    );
   }
 
   String formatDate(String date) {
@@ -224,7 +227,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
           Icon(
             Icons.bookmark_border_rounded,
             size: 80,
-            color: textSecondary.withOpacity(0.4),
+            color: textSecondary.withValues(alpha: 0.4),
           ),
           const SizedBox(height: 20),
           Text(
@@ -268,7 +271,7 @@ class SavedJobsView extends GetView<SavedJobsController> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: primaryColor.withOpacity(Get.find<ThemeController>().isDark.value ? 0.15 : 0.08),
+                color: primaryColor.withValues(alpha: Get.find<ThemeController>().isDark.value ? 0.15 : 0.08),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),

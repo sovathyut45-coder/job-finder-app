@@ -183,8 +183,8 @@ class SearchView extends GetView<SearchJobController> {
                 boxShadow: [
                   BoxShadow(
                     color: isDark 
-                        ? Colors.black.withOpacity(0.2) 
-                        : Colors.black.withOpacity(0.05),
+                        ? Colors.black.withValues(alpha: 0.2) 
+                        : Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -295,7 +295,7 @@ class SearchView extends GetView<SearchJobController> {
                         Icon(
                           Icons.search_off,
                           size: 80,
-                          color: textSecondary.withOpacity(0.4),
+                          color: textSecondary.withValues(alpha: 0.4),
                         ),
                         const SizedBox(height: 12),
                         Text(
@@ -333,7 +333,7 @@ class SearchView extends GetView<SearchJobController> {
                       return Card(
                         color: cardColor,
                         elevation: 2,
-                        shadowColor: primaryColor.withOpacity(0.12),
+                        shadowColor: primaryColor.withValues(alpha: 0.12),
                         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -353,7 +353,7 @@ class SearchView extends GetView<SearchJobController> {
                               children: [
                                 CircleAvatar(
                                   radius: 28,
-                                  backgroundColor: primaryColor.withOpacity(0.1),
+                                  backgroundColor: primaryColor.withValues(alpha: 0.1),
                                   backgroundImage: job.employerLogo.isNotEmpty
                                       ? NetworkImage(job.employerLogo)
                                       : null,
@@ -413,7 +413,7 @@ class SearchView extends GetView<SearchJobController> {
                                         children: [
                                           Chip(
                                             visualDensity: VisualDensity.compact,
-                                            backgroundColor: primaryColor.withOpacity(0.08),
+                                            backgroundColor: primaryColor.withValues(alpha: 0.08),
                                             label: Text(
                                               job.employmentType.isEmpty ? 'Available' : job.employmentType,
                                               style: TextStyle(
@@ -431,7 +431,7 @@ class SearchView extends GetView<SearchJobController> {
                                 Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16,
-                                  color: textSecondary.withOpacity(0.7),
+                                  color: textSecondary.withValues(alpha: 0.7),
                                 ),
                               ],
                             ),
