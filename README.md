@@ -1,36 +1,62 @@
 # 💼 Job Finder App
 
-A professional Flutter Job Finder application built with GetX and Repository Pattern.
-
-## 📱 Features
-
-### Job Search
-- Search Jobs
-- Debounce Search
-- Popular Job Categories
-- Search Suggestions
-
-### Job Browsing
-- Popular Jobs
-- Job Details
-- Company Information
-- Apply Job
-
-### User Features
-- Save Jobs
-- Favorites Screen
-- Pull To Refresh
-- Pagination (Infinite Scroll)
-
-### UI/UX
-- Responsive Design
-- Clean Architecture
-- Loading States
-- Error Handling
+A modern **Job Finder Application** built with **Flutter** and **GetX**, featuring a clean architecture, Laravel REST API integration, authentication, job search, saved jobs, application tracking, and profile management.
 
 ---
 
-## 🏗 Architecture
+## ✨ Features
+
+### 🔍 Job Discovery
+- Search jobs with debounce
+- Popular job categories
+- Job detail screen
+- Recent viewed jobs
+- Infinite scrolling (Pagination)
+- Pull-to-refresh
+
+### 👤 User Account
+- User authentication (Login & Register)
+- Profile management
+- Avatar upload
+- Change password
+
+### 📄 Job Management
+- Save/Unsave jobs
+- Apply for jobs
+- Track application status
+- Add notes to applications
+- Recent viewed jobs history
+
+### 📊 Dashboard
+- Applied jobs
+- Interview invitations
+- Accepted jobs
+- Rejected jobs
+- Saved jobs
+- Recent viewed jobs
+
+### 🎨 UI / UX
+- Responsive design
+- Light & Dark Theme
+- Skeleton loading
+- Error handling
+- Internationalization (English & Khmer)
+
+---
+
+# 📱 Screenshots
+
+| Home | Search | Job Detail |
+|------|---------|------------|
+| *Add Screenshot* | *Add Screenshot* | *Add Screenshot* |
+
+| Dashboard | Saved Jobs | Profile |
+|-----------|------------|----------|
+| *Add Screenshot* | *Add Screenshot* | *Add Screenshot* |
+
+---
+
+# 🏗 Project Structure
 
 ```text
 lib/
@@ -38,7 +64,10 @@ lib/
 ├── core/
 │   ├── network/
 │   ├── routes/
-│   └── theme/
+│   ├── service/
+│   ├── theme/
+│   ├── translations/
+│   └── widgets/
 │
 ├── data/
 │   ├── datasource/
@@ -46,70 +75,101 @@ lib/
 │   └── repository/
 │
 ├── modules/
+│   ├── auth/
+│   ├── dashboard/
 │   ├── home/
 │   ├── search/
 │   ├── job_detail/
-│   ├── saved_jobs/
-│   └── dashboard/
+│   ├── apply_job/
+│   ├── save_job/
+│   ├── profile/
+│   ├── settings/
+│   └── recent_job/
+│
+├── initialBinding/
 │
 └── main.dart
 ```
 
 ---
 
-## 🛠 Tech Stack
+# ⚙️ Tech Stack
 
 ### Framework
+
 - Flutter
 - Dart
 
 ### State Management
+
 - GetX
 
 ### Networking
+
 - Dio
 
+### Local Storage
+
+- GetStorage
+
+### Backend
+
+- Laravel REST API
+
+### Database
+
+- MySQL
+
+### Image Handling
+
+- Image Picker
+
 ### Architecture
+
 - Repository Pattern
+- GetX Bindings
 - Clean Architecture
 
 ---
 
-## 📸 Screenshots
+# 📦 Packages
 
-### Home Screen
-
-(Add Screenshot Here)
-
-### Search Screen
-
-(Add Screenshot Here)
-
-### Job Detail Screen
-
-(Add Screenshot Here)
-
-### Saved Jobs Screen
-
-(Add Screenshot Here)
+- get
+- dio
+- get_storage
+- cached_network_image
+- shimmer
+- skeletonizer
+- flutter_html
+- file_picker
+- image_picker
+- share_plus
+- url_launcher
+- intl
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Getting Started
 
-### Clone Repository
+## Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/job-finder-app.git
+git clone https://github.com/sovathyut45-coder/job-finder-app.git
 ```
 
-### Install Dependencies
+## Navigate to the project
+
+```bash
+cd job-finder-app
+```
+
+## Install dependencies
 
 ```bash
 flutter pub get
 ```
 
-### Run Application
+## Run the application
 
 ```bash
 flutter run
@@ -117,44 +177,70 @@ flutter run
 
 ---
 
-## 📂 Features Implemented
+# 📂 Features Checklist
 
-- [x] Home Screen
+## Authentication
+
+- [x] Login
+- [x] Register
+- [x] Logout
+- [x] Change Password
+
+## Jobs
+
 - [x] Search Jobs
-- [x] Debounce Search
 - [x] Pagination
 - [x] Pull To Refresh
 - [x] Job Detail
 - [x] Save Jobs
-- [x] Favorites Screen
 - [x] Apply Job
-- [x] GetX Navigation
-- [x] Repository Pattern
+- [x] Application Tracking
+- [x] Recent Viewed Jobs
+
+## Dashboard
+
+- [x] Statistics
+- [x] Application Status
+- [x] Saved Jobs Count
+
+## Profile
+
+- [x] Update Profile
+- [x] Upload Avatar
+
+## UI
+
+- [x] Dark Mode
+- [x] Skeleton Loading
+- [x] Localization (EN / KM)
 
 ---
 
-## 🔮 Future Improvements
+# 🔮 Future Improvements
 
-- RemoteOK API Integration
-- Dark Mode
-- Job Filters
-- Authentication
-- Resume Upload
-- Company Profiles
-- Offline Support
-- Cached Images
+- Job recommendations
+- Advanced filters
+- Push notifications
+- Resume builder
+- Company reviews
+- Offline support
+- Email verification
+- Social login
+- Bookmark folders
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
 **Phai Sovathyut**
 
-- Email: sovathyut45@gmail.com
-- GitHub: https://github.com/sovathyut45-coder
+🎓 Computer Science Student — Royal University of Phnom Penh (RUPP)
+
+- 📧 Email: sovathyut45@gmail.com
+- 💻 GitHub: https://github.com/sovathyut45-coder
 
 ---
 
-## 📄 License
+# 📄 License
 
-This project is for educational and portfolio purposes.
+This project is developed for educational purposes and portfolio demonstration.
