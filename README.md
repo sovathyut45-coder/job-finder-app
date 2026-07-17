@@ -44,18 +44,6 @@ A modern **Job Finder Application** built with **Flutter** and **GetX**, featuri
 
 ---
 
-# 📱 Screenshots
-
-| Home | Search | Job Detail |
-|------|---------|------------|
-| *Add Screenshot* | *Add Screenshot* | *Add Screenshot* |
-
-| Dashboard | Saved Jobs | Profile |
-|-----------|------------|----------|
-| *Add Screenshot* | *Add Screenshot* | *Add Screenshot* |
-
----
-
 # 🏗 Project Structure
 
 ```text
