@@ -118,16 +118,6 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                     ),
                     child: Wrap(
                       children: [
-                        // ListTile(
-                        //   title: Text('applied'.tr),
-                        //   onTap: () {
-                        //     controller.updateStatus(
-                        //       job.id,
-                        //       'applied'.tr,
-                        //     );
-                        //     Get.back();
-                        //   },
-                        // ),
 
                         ListTile(
                           title: Text('interview'.tr),
@@ -136,7 +126,9 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                               job.id,
                               'interview'.tr,
                             );
-                            Get.back();
+                            if (Get.isBottomSheetOpen ?? false) {
+                              Navigator.of(Get.context!).pop();
+                            }
                           },
                         ),
 
@@ -147,7 +139,9 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                               job.id,
                               'accepted'.tr,
                             );
-                            Get.back();
+                            if (Get.isBottomSheetOpen ?? false) {
+                              Navigator.of(Get.context!).pop();
+                            }
                           },
                         ),
 
@@ -158,7 +152,9 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                               job.id,
                               'rejected'.tr,
                             );
-                            Get.back();
+                            if (Get.isBottomSheetOpen ?? false) {
+                              Navigator.of(Get.context!).pop();
+                            }
                           },
                         ),
                       ],
@@ -261,17 +257,6 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                               ),
                               child: Wrap(
                                 children: [
-                                  // ListTile(
-                                  //   title: Text('applied'.tr),
-                                  //   onTap: () {
-                                  //     controller.updateStatus(
-                                  //       job.id,
-                                  //       'applied'.tr,
-                                  //     );
-                                  //     Get.back();
-                                  //   },
-                                  // ),
-
                                   ListTile(
                                     title: Text('interview'.tr),
                                     onTap: () {
@@ -279,7 +264,9 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                                         job.id,
                                         'interview'.tr,
                                       );
-                                      Get.back();
+                                      if (Get.isBottomSheetOpen ?? false) {
+                                        Navigator.of(Get.context!).pop();
+                                      }
                                     },
                                   ),
 
@@ -290,7 +277,9 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                                         job.id,
                                         'accepted'.tr,
                                       );
-                                      Get.back();
+                                      if (Get.isBottomSheetOpen ?? false) {
+                                        Navigator.of(Get.context!).pop();
+                                      }
                                     },
                                   ),
 
@@ -301,7 +290,9 @@ class AppliedJobView extends GetView<AppliedJobsController> {
                                         job.id,
                                         'rejected'.tr,
                                       );
-                                      Get.back();
+                                      if (Get.isBottomSheetOpen ?? false) {
+                                        Navigator.of(Get.context!).pop();
+                                      }
                                     },
                                   ),
                                 ],
@@ -369,7 +360,7 @@ class AppliedJobView extends GetView<AppliedJobsController> {
           noteController.text,
         );
 
-        Get.back();
+        Navigator.pop(Get.context!);
       },
     );
   }

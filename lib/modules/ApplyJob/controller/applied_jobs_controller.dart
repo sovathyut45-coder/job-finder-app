@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar, Text, TextStyle, Color, EdgeInsets, Colors, SnackBarBehavior, BorderRadius, RoundedRectangleBorder, Clip, Navigator;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:job_finder_app/core/Service/auth_service.dart';
@@ -17,6 +18,7 @@ class AppliedJobsController extends GetxController {
   RxBool isLoading = false.obs;
   RxString errorMessage = ''.obs;
   final AuthService authService = Get.find<AuthService>();
+  
 
 
   @override
@@ -43,13 +45,27 @@ class AppliedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        Get.snackbar(
-          'Success',
-          'Status updated successfully',
-          snackPosition: SnackPosition.TOP,
-          duration: Duration(seconds: 1),
+        final message = response.data['message'];
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
         await getAppliedJob ();
+          
       } else {
         throw 'មិនអាច Update Status បាន';
       }
@@ -85,11 +101,24 @@ class AppliedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        Get.snackbar(
-          'Success',
-          'Note updated successfully',
-          snackPosition: SnackPosition.TOP,
-          duration: Duration(seconds: 1),
+        final message = response.data['message'];
+       ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
         await getAppliedJob();
       } else {
@@ -159,13 +188,33 @@ class AppliedJobsController extends GetxController {
       );
 
       if(response.statusCode == 200 || response.statusCode == 201){
+        final message = response.data['message'] ?? 'Success';
         await getAppliedJob();
         Future.microtask(() {
-      if (Get.isRegistered<DashboardController>()) {
-          Get.find<DashboardController>()
-              .loadStats();
-        }
+          if (Get.isRegistered<DashboardController>()) {
+              Get.find<DashboardController>()
+                  .loadStats();
+            }
       });
+
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
+        );
       
       }else{
         throw 'មិនអាចរក្សាទុកបាន (កូដ: ${response.statusCode})';
@@ -223,16 +272,29 @@ class AppliedJobsController extends GetxController {
       );
 
       if(response.statusCode == 200 || response.statusCode == 204){
+        final message = response.data['message'] ?? 'Success';
         appliedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
         if (Get.isRegistered<DashboardController>()) {
           Get.find<DashboardController>().loadStats();
           //Get.find<DashboardController>().loadApplicationStats();
         }
-        Get.snackbar(
-          'Success',
-          'Applied job deleted successfully',
-          snackPosition: SnackPosition.TOP,
-          duration: Duration(seconds: 1),
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
       }else{
         throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';
@@ -254,16 +316,28 @@ class AppliedJobsController extends GetxController {
       );
 
       if(response.statusCode == 200){
+        final message = response.data['message'] ?? 'Success';
         appliedJobs.clear();
         if (Get.isRegistered<DashboardController>()) {
           Get.find<DashboardController>().loadStats();
-          //Get.find<DashboardController>().loadApplicationStats();
         }
-        Get.snackbar(
-          'Success',
-          'Delete all applied jobs successfully',
-          snackPosition: SnackPosition.TOP,
-          duration: Duration(seconds: 1),
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
       }else{
         throw 'មិនអាចលុបបាន (កូដ: ${response.statusCode})';

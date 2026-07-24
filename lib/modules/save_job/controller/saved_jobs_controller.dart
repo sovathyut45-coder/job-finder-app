@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:job_finder_app/core/Service/auth_service.dart';
@@ -47,12 +48,25 @@ class SavedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        final message = response.data['message'] ?? 'Success';
         
-        Get.snackbar(
-          'Success',
-          'Job saved successfully',
-          duration: Duration(seconds: 1),
-          snackPosition: SnackPosition.TOP,
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content:  Text(
+              message,
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
 
         await getSavedJobs(); 
@@ -113,10 +127,25 @@ class SavedJobsController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 204) {
-        Get.snackbar(
-          'Success',
-          'Saved job deleted successfully',
-          snackPosition: SnackPosition.TOP,
+        final message = response.data['message'] ?? 'Success';
+
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: const TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
         savedJobs.removeWhere((item) => item.id.toString() == job.id.toString());
         
@@ -145,9 +174,23 @@ class SavedJobsController extends GetxController {
         savedJobs.clear();
 
         _updateDashboardStats();
-        Get.snackbar(
-          'Success',
-          'All saved jobs removed.',
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Saved jobs cleared',
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
         );
       }
     } finally {

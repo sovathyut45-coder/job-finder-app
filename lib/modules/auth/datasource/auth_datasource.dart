@@ -59,7 +59,7 @@ class AuthDatasource {
     required String token,
     required Map<String, dynamic> data,
   }){
-    return DioClient.authDio.post(
+    return DioClient.authDio.put(
       '/change-password',
       data: data,
       options: Options(

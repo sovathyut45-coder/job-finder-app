@@ -360,7 +360,7 @@ class SettingView extends GetView<SettingController> {
                               title: Text('english'.tr),
                               onTap: () {
                                 languageController.changeLanguage('en');
-                                Get.back();
+                                Navigator.pop(context);
                               },
                             ),
                             const Divider(height: 1),
@@ -369,7 +369,7 @@ class SettingView extends GetView<SettingController> {
                               title: Text('khmer'.tr),
                               onTap: () {
                                 languageController.changeLanguage('km');
-                                Get.back();
+                                Navigator.pop(context);
                               },
                             ),
                           ],
@@ -400,7 +400,7 @@ class SettingView extends GetView<SettingController> {
                     title: 'clear_search_history'.tr,
                     onTap: () => controller.showClearDialog(
                       title: 'clear_search_history'.tr,
-                      onConfirm: () => controller.clearSearchHistory(),
+                      onConfirm: () => controller.clearSearchHistory(context),
                     ),
                   ),
                   const Divider(height: 1),
@@ -430,7 +430,7 @@ class SettingView extends GetView<SettingController> {
                     title: 'clear_recent_jobs'.tr,
                     onTap: () => controller.showClearDialog(
                       title: 'clear_recent_jobs'.tr,
-                      onConfirm: () => controller.clearRecentJobs(),
+                      onConfirm: () => controller.clearRecentJobs(context),
                     ),
                   ),
                 ],
@@ -504,7 +504,40 @@ class SettingView extends GetView<SettingController> {
                     iconColor: Colors.redAccent,
                     textColor: Colors.redAccent,
                     onTap: () {
-                      auth.logout();
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text('logout'.tr),
+                          content: Text(
+                            'are_you_sure_you_want_to_logout?'.tr,
+                          ),
+                          actions: [
+
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('cancel'.tr),
+                            ),
+
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                auth.logout();
+                              },
+                              child: Text(
+                                'yes,logout'.tr,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
                     },
                   ),
                 ],

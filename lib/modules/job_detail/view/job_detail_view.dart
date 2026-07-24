@@ -987,7 +987,7 @@ class JobDetailView extends GetView<JobDetailController> {
                                   Expanded(
                                     child: OutlinedButton(
                                       onPressed: () {
-                                        Get.back();
+                                        Navigator.pop(context);
                                       },
                                       child: Text(
                                         'cancel'.tr,
@@ -1000,14 +1000,10 @@ class JobDetailView extends GetView<JobDetailController> {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        Get.back();
+                                        Navigator.pop(context);
                                         await appliedcontroller
-                                            .applyJob(
-                                          job,
-                                        );
-                                        print(
-                                            'Applied Registered = ${Get.isRegistered<AppliedJobsController>()}',
-                                          );
+                                            .applyJob(job);
+                    
                                         if(Get.isRegistered<AppliedJobsController>()){
                                           Get.find<AppliedJobsController>()
                                               .appliedJob(job);

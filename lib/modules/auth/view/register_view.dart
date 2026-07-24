@@ -183,8 +183,8 @@ class RegisterView extends GetView<AuthController>{
                       if(value == null || value.isEmpty) {
                         return 'Please enter your password';
                       }
-                      if(value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                      if(value.length < 8) {
+                        return 'password_must_be_at_least_8_characters'.tr;
                       }
                       return null;
                     },
@@ -205,10 +205,10 @@ class RegisterView extends GetView<AuthController>{
                     ),
                     validator: (value) {
                       if(value == null || value.isEmpty) {
-                        return 'Please confirm your password';
+                        return 'confirm_password_required'.tr;
                       }
                       if(value != controller.passwordController.text) {
-                        return 'Passwords do not match';
+                        return 'passwords_do_not_match'.tr;
                       }
                       return null;
                     },
