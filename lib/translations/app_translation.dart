@@ -52,7 +52,7 @@ class AppTranslation extends Translations {
 
           // save 
           'save' : 'Save',
-          'save_job': 'Save Job',
+          'save_jobs': 'Save Job',
           'no_saved_jobs' : 'No Saved Jobs',
           'remove_job': 'Remove Job',
           'save_interesting_jobs_to_view_them_later': 'Save interesting jobs to view them later',
@@ -71,8 +71,6 @@ class AppTranslation extends Translations {
           'profile': 'Profile',
           'account': 'Account',
           'email': 'Email',
-          'password': 'Password',
-          'change_password': 'Change Password',
           'your_activity': 'Your Activity',
           
 
@@ -93,7 +91,7 @@ class AppTranslation extends Translations {
           'share': 'Share',
           'shared' : 'Shared',
           'no_job_available' : 'No Job Available',
-          'jop_information' : 'Jop Information',
+          'job_information' : 'Job Information',
           'job_description' : 'Job Description',
           'you_are_about_to_open_the_company_application_page' : 'You are about to open the company application page',
           'continue' : 'Continue',
@@ -136,7 +134,23 @@ class AppTranslation extends Translations {
           'are_you_sure_you_want_to_logout?': 'Are you sure you want to logout?',
           'yes,logout': 'Yes, Logout',
 
-          'results' : 'Result'
+          'results' : 'Result',
+
+          // Change Password
+          'change_password': 'Change Password',
+          'current_password': 'Current Password',
+          'new_password': 'New Password',
+          'confirm_new_password': 'Confirm New Password',
+          'enter_current_password': 'Enter current password',
+          'enter_new_password': 'Enter new password',
+          'update_your_password_to_keep_your_account_secure':
+              'Update your password to keep your account secure',
+          'current_password_required': 'Current password is required',
+          'new_password_required': 'New password is required',
+          'password_must_be_at_least_8_characters':
+              'Password must be at least 8 characters',
+          'confirm_password_required': 'Please confirm your new password',
+          'passwords_do_not_match': 'Passwords do not match',
         },
 
         'km_KH': {
@@ -158,7 +172,7 @@ class AppTranslation extends Translations {
 
           // Jobs
           'recent_jobs': 'ការងារថ្មីៗ',
-          'no_jobs_found':
+          'no_jobs_found': 
               'រកមិនឃើញការងារ',
           'try_another_keyword':
               'សូមសាកល្បងពាក្យផ្សេង',
@@ -171,9 +185,9 @@ class AppTranslation extends Translations {
           // apply
           'status': 'ស្ថានភាព',
           'applied': 'បានដាក់ពាក្យ',
-          'interview': 'កំពុងសម្ភាសន៍',
-          'accepted': 'ជាប់',
-          'rejected': 'មិនជាប់',
+          //'interview': 'កំពុងសម្ភាសន៍',
+          //'accepted': 'ជាប់',
+          //'rejected': 'មិនជាប់',
           'note': 'កំណត់ចំណាំ',
           'add_note': 'បន្ថែមកំណត់ចំណាំ',
           'update_note': 'កែប្រែកំណត់ចំណាំ',
@@ -207,8 +221,6 @@ class AppTranslation extends Translations {
           'profile': 'ព័ត៌មានផ្ទាល់ខ្លួន',
           'account': 'គណនី',
           'email': 'អ៊ីមែល',
-          'password': 'ពាក្យសម្ងាត់',
-          'change_password' : 'ប្ដូរពាក្យសម្ងាត់',
           'your_activity': 'សកម្មភាពរបស់អ្នក',
 
           // home 
@@ -277,6 +289,24 @@ class AppTranslation extends Translations {
           'yes,logout': 'បាទ/ចាស, ចាកចេញ',
 
           'results': 'លទ្ធផល',
+
+          // change Password
+          'change_password': 'ប្តូរពាក្យសម្ងាត់',
+          'current_password': 'ពាក្យសម្ងាត់បច្ចុប្បន្ន',
+          'new_password': 'ពាក្យសម្ងាត់ថ្មី',
+          'confirm_new_password': 'បញ្ជាក់ពាក្យសម្ងាត់ថ្មី',
+          'enter_current_password': 'បញ្ចូលពាក្យសម្ងាត់បច្ចុប្បន្ន',
+          'enter_new_password': 'បញ្ចូលពាក្យសម្ងាត់ថ្មី',
+          'update_your_password_to_keep_your_account_secure':
+              'ប្តូរពាក្យសម្ងាត់របស់អ្នក ដើម្បីរក្សាសុវត្ថិភាពគណនី',
+          'current_password_required': 'សូមបញ្ចូលពាក្យសម្ងាត់បច្ចុប្បន្ន',
+          'new_password_required': 'សូមបញ្ចូលពាក្យសម្ងាត់ថ្មី',
+          'password_must_be_at_least_8_characters':
+              'ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៨ តួអក្សរ',
+          'confirm_password_required':
+              'សូមបញ្ជាក់ពាក្យសម្ងាត់ថ្មីរបស់អ្នក',
+          'passwords_do_not_match':
+              'ពាក្យសម្ងាត់មិនត្រូវគ្នាទេ',
         },
       };
 }

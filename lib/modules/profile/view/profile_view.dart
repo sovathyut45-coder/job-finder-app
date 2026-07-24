@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:job_finder_app/core/routes/app_routes.dart';
 import 'package:job_finder_app/modules/profile/controller/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -102,7 +103,9 @@ class ProfileView extends GetView<ProfileController> {
                       leading: const Icon(Icons.lock_outline),
                       title: Text('change_password'.tr),
                       trailing: const Icon(Icons.arrow_forward_ios,size:16),
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(AppRoutes.changePassword);
+                      },
                     ),
                   ],
                 ),

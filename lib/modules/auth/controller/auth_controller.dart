@@ -20,6 +20,7 @@ class AuthController extends GetxController {
   final confirmPasswordController =
       TextEditingController();
   final currentPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
 
   final nameController =
       TextEditingController();
@@ -47,6 +48,10 @@ class AuthController extends GetxController {
 
   final forgotPasswordFormKey = GlobalKey<FormState>();
   final changePasswordFormKey = GlobalKey<FormState>();
+
+  final isCurrentPasswordHidden = true.obs;
+  final isNewPasswordHidden = true.obs;
+  final isConfirmPasswordHidden = true.obs;
 
   @override
   void onInit() {
@@ -468,36 +473,132 @@ class AuthController extends GetxController {
   Future<void> changePassword() async {
     try {
       isLoading.value = true;
-      await repository.changePassword(
+
+      if (authService.token == null ||
+          authService.token!.isEmpty) {
+        throw 'Please login first';
+      }
+
+      final response = await repository.changePassword(
         token: authService.token!,
         data: {
-          'current_password' : currentPasswordController.text.trim(),
-          'password': passwordController.text.trim(),
-          'password_confirmation': confirmPasswordController.text.trim(),
+          'current_password':
+              currentPasswordController.text.trim(),
+          'password':
+              newPasswordController.text.trim(),
+          'password_confirmation':
+              confirmPasswordController.text.trim(),
         },
       );
-      Get.snackbar(
-        'Success',
-        'Password changed successfully',
-      );
 
-      authService.clearToken();
-      currentPasswordController.clear();
-      passwordController.clear();
-      confirmPasswordController.clear();
+      if (response.statusCode == 200) {
+        final message =
+            response.data['message'] ?? 'Password changed successfully';
 
-      Get.offAllNamed(
-        AppRoutes.login,
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 20,
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 2),
+            backgroundColor:
+                Get.theme.snackBarTheme.backgroundColor ??
+                    Colors.grey[800],
+          ),
+        );
+
+        authService.clearToken();
+
+        clearChangePasswordFields();
+        Get.offAllNamed(
+          AppRoutes.login,
+        );
+      }
+    } on DioException catch (e) {
+      String message = 'Something went wrong';
+
+      if (e.response?.data is Map) {
+        final data = e.response!.data;
+
+        if (data['errors'] is String) {
+          message = data['errors'];
+        } else if (data['message'] is String) {
+          message = data['message'];
+        }
+      }
+
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 20,
+          ),
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ),
       );
-        
-    }catch(e){
-      Get.snackbar(
-        'Error',
-        e.toString(),
+    } catch (e) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 20,
+          ),
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        ),
       );
-    }
-    finally{
+    } finally {
       isLoading.value = false;
     }
   }
+
+  void toggleCurrentPassword() {
+    isCurrentPasswordHidden.toggle();
+  }
+
+  void toggleNewPassword() {
+    isNewPasswordHidden.toggle();
+  }
+
+  void toggleConfirmPassword() {
+    isConfirmPasswordHidden.toggle();
+  }
+
+  void clearChangePasswordFields() {
+  currentPasswordController.clear();
+  newPasswordController.clear();
+  confirmPasswordController.clear();
+
+  changePasswordFormKey.currentState?.reset();
+}
 }

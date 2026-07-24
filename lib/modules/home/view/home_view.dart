@@ -294,7 +294,6 @@ import 'package:job_finder_app/core/widgets/job_card_skeleton.dart';
 import 'package:job_finder_app/core/widgets/skeleton_loading.dart';
 import 'package:job_finder_app/core/widgets/stat_card.dart';
 import 'package:job_finder_app/modules/RecentJob/recent_jobs_controller.dart';
-import 'package:job_finder_app/modules/auth/controller/auth_controller.dart';
 import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller.dart';
 
 import '../../../core/routes/app_routes.dart';
@@ -311,7 +310,6 @@ class HomeView extends GetView<HomeController> {
     final isDark = themeController.isDark.value;
     final recentController = Get.find<RecentJobsController>();
     final statsController = Get.find<DashboardController>();
-    final authController = Get.find<AuthController>();
     
 
     // Get theme-aware colors
@@ -488,12 +486,6 @@ class HomeView extends GetView<HomeController> {
                 if (recentController.recentJobs.isEmpty) {
                   return const SizedBox();
                 }
-
-                  // print(
-                  //   'UI rebuild: ${recentController.recentJobs.length}',
-                  // );
-
-
                 return Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
@@ -600,7 +592,7 @@ class HomeView extends GetView<HomeController> {
                   padding: const EdgeInsets.all(24),
                   child: Center(
                     child: Text(
-                      'no_job_found'.tr,
+                      'no_jobs_found'.tr,
                       style: TextStyle(color: textSecondary, fontSize: 16),
                     ),
                   ),

@@ -7,13 +7,28 @@ import 'package:job_finder_app/modules/dashboard/controller/dashboard_controller
 class SettingController extends GetxController {
   final box = GetStorage();
 
-  void clearSearchHistory() {
+  Future<void> clearSearchHistory(BuildContext context) async {
     box.remove('search_history');
 
-    Get.snackbar(
-      'Success',
-      'Search history cleared',
-    );
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Search history cleared',
+              style: TextStyle(color: Colors.white), // Explicit text contrast
+            ),
+            behavior: SnackBarBehavior.floating,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+            elevation: 6,
+            clipBehavior: Clip.antiAlias,
+          ),
+        );
+
     Future.microtask(() {
       if (Get.isRegistered<DashboardController>()) {
         Get.find<DashboardController>()
@@ -22,54 +37,76 @@ class SettingController extends GetxController {
     });
   }
 
-  void clearRecentJobs() {
-    box.remove('recent_jobs');
-
-    Get.snackbar(
-      'Success',
-      'Recent jobs cleared',
-    );
-    Future.microtask(() {
-      if (Get.isRegistered<DashboardController>()) {
-        Get.find<DashboardController>()
-            .loadStats();
-      }
-      if(Get.isRegistered<RecentJobsController>()){
-        Get.find<RecentJobsController>().loadRecentJobs();
-        
-      }
-    });
-  }
-
-  Future<void> showClearDialog({
-  required String title,
-  required VoidCallback onConfirm,
-}) async {
-  final result = await Get.dialog<bool>(
-    AlertDialog(
-      title: Text(title),
-      content: Text(
-        'the_action_cannot_be_undone'.tr,
+  Future<void> clearRecentJobs(BuildContext context) async {
+      box.remove('recent_jobs');
+  
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+      SnackBar(
+        content: const Text(
+          'Recent jobs cleared',
+          style: TextStyle(color: Colors.white), // Explicit text contrast
+        ),
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        duration: const Duration(seconds: 1),
+        backgroundColor: Get.theme.snackBarTheme.backgroundColor ?? Colors.grey[800],
+        elevation: 6,
+        clipBehavior: Clip.antiAlias,
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Get.back(result: false);
-          },
-          child: const Text('Cancel'),
+    );
+      await Future.microtask(() {
+        if (Get.isRegistered<DashboardController>()) {
+          Get.find<DashboardController>()
+              .loadStats();
+        }
+        if(Get.isRegistered<RecentJobsController>()){
+          Get.find<RecentJobsController>().loadRecentJobs();
+          
+        }
+      });
+      return; // Ensure the method completes with a return
+  }
+
+Future<void> showClearDialog({
+  required String title,
+  required Future<void> Function() onConfirm,
+}) async {
+  final result = await showDialog<bool>(
+    context: Get.context!,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(
+          'the_action_cannot_be_undone'.tr,
         ),
-        TextButton(
-          onPressed: () {
-            Get.back(result: true);
-          },
-          child: const Text('Clear'),
-        ),
-      ],
-    ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text(
+              'cancel'.tr,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: Text(
+              'clear'.tr,
+            ),
+          ),
+        ],
+      );
+    },
   );
 
   if (result == true) {
-    onConfirm();
+    await onConfirm();
   }
 }
 }
